@@ -21,6 +21,10 @@ const userSchema = mongoose.Schema({
     }
 })
 
+userSchema.pre('save', ( next )=>{
+    let user = this;
+})
+
 
 const User = mongoose.Model("User", userSchema)
 
