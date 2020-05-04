@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const config = require('./config/key')
-const { User } = require('./model/user')
+const routes = require('./routes/api')
 
 // -----Connect to the database
-mongoose.connect(config.mongoURI,{useNewUrlParse: true}).then(()=>{
+mongoose.connect(config.mongoURI,
+    {useNewUrlParser: true,useUnifiedTopology:true,
+    createIndexes : true}).then(()=>{
     console.log("Database connected")
 }).catch((error)=>{
     console.log(error)
@@ -18,21 +20,9 @@ mongoose.connect(config.mongoURI,{useNewUrlParse: true}).then(()=>{
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json())
 app.use(cookieParser())
-
-app.post('/api/users/register',(req,res)=>{
-    const user = new User(req.body);
-    user.save((err,userData)=>{
-        if(err) return res.json({
-        success : false,
-        err
-        })
-        res.status(200).json({
-            success : true,
-            data : userData
-        })
-    })
-
-})
+app.use('/api', routes);
 
 // ---- Setting up server to listen on port 5000
-app.listen(5000)
+app.listen(5000,()=>{
+    console.log("App is running on 5000")
+})

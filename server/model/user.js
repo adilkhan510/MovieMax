@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 
 const saltRounds = 10
-const userSchema = mongoose.Schema({
+const Schema = mongoose.Schema;
+const userSchema = new Schema({
     firstName : {
         type : String,
         maxLength : 50,
@@ -24,7 +25,9 @@ const userSchema = mongoose.Schema({
     }
 })
 
-// userSchema.pre('save', ( next )=>{
+// Before we save the user in our database we want to hash the password.
+
+// userSchema.pre('save',function( next ){
 //     let user = this;
 //     if(user.isModified('password')){
 //         bcrypt.genSalt(saltRounds,(err,salt)=>{
