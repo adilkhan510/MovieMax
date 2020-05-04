@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+// Everytime a logged in user wants to do something that requires sending a request to the backend it will go thru the auth function
+
 const auth = async (req,res,next)=>{
     try{
         const token = req.header("token")
@@ -16,5 +18,4 @@ const auth = async (req,res,next)=>{
             error : "something went wrong"
         })
     }
-
 }
