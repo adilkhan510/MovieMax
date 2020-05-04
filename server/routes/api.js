@@ -16,8 +16,8 @@ router.delete('/users/:id', ctrl.destroy);
 
 // create User
 
-router.post('/users/register', ctrl.create)
-router.post('/auth/users', ctrl.createSession)
+router.post('/users/register', ctrl.register)
+router.post('/users/login', ctrl.login)
 
 // update
 // restful routing process : put for updating and get for seeing so rely on that for making your routes.
@@ -27,7 +27,6 @@ router.put('/users/update/:userId/addmovie', ctrl.addToFavorites);
 
 
 // create movie
-router.post('/movies', ctrl.create)
 //show one movie
 router.get('/movies',ctrl.show)
 
@@ -35,7 +34,6 @@ router.get('/movies',ctrl.show)
 // review route
 
 router.get('/review', ctrl.show)
-router.post('/review/create', ctrl.create)
 
 router.delete('/review/delete/:id', ctrl.destroy)
 router.put('/review/update/:id', ctrl.update)

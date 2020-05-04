@@ -1,9 +1,9 @@
 const db = require('../model/user');
-const salt = 10;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 
-const create = async (req,res)=>{
+const register = async (req,res)=>{
     try{
         const {firstName, lastName, email, password} = req.body;
         const existingUser = await db.User.findOne({email : email});
@@ -80,32 +80,34 @@ const show = (req,res)=>{
     })
 }; 
 
-const createSession = (req,res)=>{
-    console.log('req sessssion---->Creating session');
-    db.User.findOne({email: req.body.email},(err,foundUser)=>{
-        if(err) return res.status(500).json({
-            status: 500,
-            Message: "something went wrong"
-        })
-        if(!foundUser) return res.status(200).json({
-            status: 201,
-            message: "incorrect password or email"
-        })
-        if(req.body.password === foundUser.password){
-            req.session.currentUser = foundUser._id;
-            res.status(201).json({
-                status: 201,
-                data: {
-                    id: foundUser._id,
-                    name: foundUser.name,
-                    email: foundUser.email,
-                    cardNumber: foundUser.cardNumber,
-                    cvc: foundUser.cvc
-                }
+const login = async (req,res)=>{
+    try{
+        const { email, password } = req.body;
+        const existingUser = await db.User.findOne({email : email});
+        if(!existingUser){
+            res.status(400).json({
+                error : "Invalid email or Password"
+            })
+        };
+        const isMatch = await bcrypt.compare(password, existingUser.password);
+        if(!isMatch){
+            return res.status(400).json({
+                error : "Invalid Email or Password"
             })
         }
-    })
-
+        const token = jwt.sign({data : existingUser._id},process.env.JWT_TOKEN)
+        console.log(token)
+        res.status(201).json({
+            token,
+            email : existingUser.email,
+            id : existingUser._id,
+            name : existingUser.firstName
+        })
+    } catch(err){
+        return res.status(400).json({
+            error: "Something went wrong while logging in."
+        })
+    }
 }
 
 const addMovie = (req,res) => {
@@ -177,10 +179,10 @@ const getFavorites=(req,res)=>{
 module.exports ={
     show,
     update,
-    create,
+    register,
     destroy,
     index,
-    createSession,
+    login,
     addMovie,
     getFavorites,
     addToFavorites

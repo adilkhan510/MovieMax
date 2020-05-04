@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const config = require('./config/key')
 const routes = require('./routes/api')
+require('dotenv').config()
 
 // -----Connect to the database
 mongoose.connect(config.mongoURI,
