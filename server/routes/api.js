@@ -20,18 +20,16 @@ router.post('/users/register', ctrl.register)
 router.post('/users/login', ctrl.login)
 
 // update
-// restful routing process : put for updating and get for seeing so rely on that for making your routes.
 
 router.put('/users/update/:userId', ctrl.update);
 router.put('/users/update/:userId/addmovie', ctrl.addToFavorites);
 
 
-// create movie
 //show one movie
 router.get('/movies',ctrl.show)
 
 
-// review route
+// review routes
 
 router.get('/review', ctrl.show)
 
