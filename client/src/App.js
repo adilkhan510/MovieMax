@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/core'
 import './App.css';
 import theme from "./components/styles/muiTheme"
 import Login from './components/Auth/Login';
+import NavBar from './components/Navigation/NavBar';
 
 function App() {
   // useEffect(()=>{
@@ -23,6 +24,7 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
+        <NavBar />
         <Route>
           <Switch>
             <Login />
