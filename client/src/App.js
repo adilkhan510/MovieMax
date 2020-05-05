@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import { Route, Switch } from 'react-router-dom'
+import { ThemeProvider } from '@material-ui/core'
 import './App.css';
+import theme from "./components/styles/muiTheme"
 import Login from './components/Auth/Login';
 
 function App() {
@@ -20,11 +22,13 @@ function App() {
   // },[])
   return (
     <div className="App">
-      <Route>
-        <Switch>
-          <Login />
-        </Switch>
-      </Route>
+      <ThemeProvider theme={theme}>
+        <Route>
+          <Switch>
+            <Login />
+          </Switch>
+        </Route>
+      </ThemeProvider>
     </div>
   );
 }
