@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom'
 import './App.css';
+import Login from './components/Auth/Login';
 
 function App() {
   // useEffect(()=>{
@@ -19,7 +20,11 @@ function App() {
   // },[])
   return (
     <div className="App">
-      
+      <Route>
+        <Switch>
+          <Login />
+        </Switch>
+      </Route>
     </div>
   );
 }
