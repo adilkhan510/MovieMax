@@ -5,6 +5,8 @@ import './App.css';
 import theme from "./components/styles/muiTheme"
 import Login from './components/Auth/Login';
 import NavBar from './components/Navigation/NavBar';
+import Home from './components/Home/Home'
+import Profile from './components/Profile/Profile'
 
 function App() {
   // useEffect(()=>{
@@ -27,7 +29,9 @@ function App() {
         <NavBar />
         <Route>
           <Switch>
-            <Login />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/login" component={Login} />
           </Switch>
         </Route>
       </ThemeProvider>
