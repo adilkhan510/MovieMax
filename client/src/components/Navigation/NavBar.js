@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withStyles, Box, Tabs, Tab, AppBar, Toolbar } from '@material-ui/core';
 import { Link } from 'react-router-dom'
-import styles from '../styles/navbar';
+import styles from '../../styles/navbar';
 
 const NavBar = ( props ) => {
     const { classes } = props
