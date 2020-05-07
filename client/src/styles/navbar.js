@@ -1,7 +1,7 @@
 const styles = (theme)=>({
     root: {
         flexGrow: 1,
-        background : theme.palette.primary
+        background : theme.palette.primary.light
     },
     title: {
         flexGrow: 1,

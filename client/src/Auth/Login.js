@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios'
 import { withStyles } from '@material-ui/styles'
 import { Formik } from 'formik';
 import styles from '../styles/login'
 import { Typography, Paper, TextField, Button, Avatar} from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
+import formHook  from '../hooks/useFormState'
 
 
 const Login = ( props ) => {
-    
+    const [email, handleEmail, resetEmail] = formHook('');
+    const [password, handlePassword, resetPassword] = formHook('');
+
+    const handleSubmit = (event)=>{
+        event.preventDefault();
+        axios.get('/api/users',{ headers : {
+            "Content-Type" : "application/json"
+            }}).then(
+            res => {
+                console.log(res)
+            }
+        ).catch(err => {
+            console.log(err)
+        })
+    }
+
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -15,7 +32,7 @@ const Login = ( props ) => {
             <Avatar className={classes.avatar}>
                 <LockIcon color="primary" fontSize="large" />
             </Avatar>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={handleSubmit}>
                 <TextField className={classes.textField}
                     variant="outlined"
                     margin="normal"
@@ -25,8 +42,10 @@ const Login = ( props ) => {
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    value={email}
+                    onChange={handleEmail}
                 />
-                <TextField className= {classes.textField} label="Password" variant="outlined" />
+                <TextField className= {classes.textField} label="Password" variant="outlined" value={password} onChange={handlePassword} />
                 <Button
                     type="submit"
                     fullWidth
@@ -42,7 +61,7 @@ const Login = ( props ) => {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                >Test account Login</Button>
+                >Test account</Button>
             </form>
         </Paper>
         </div>

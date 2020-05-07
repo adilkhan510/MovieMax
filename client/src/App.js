@@ -9,20 +9,6 @@ import Home from './components/Home/Home'
 import Profile from './components/Profile/Profile'
 
 function App() {
-  // useEffect(()=>{
-  //   fetch("/api/users",
-  //   {
-  //     headers:{
-  //         "accepts" : "application/json"
-  //     }
-  //   })
-  //   .then(res => {
-  //       console.log(res);
-  //       return res.json();
-  //   })
-  //   .then(json => console.log(json))
-  //   .catch( a => { console.log(a)})
-  // },[])
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
