@@ -10,7 +10,12 @@ const styles = (theme)=>({
         flexGrow : 1,
         height : "auto"
     },
-    gridItem : {
+    loadMore:{
+        display : "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100vw",
+        marginBottom: "20px"
     }
 })
 
