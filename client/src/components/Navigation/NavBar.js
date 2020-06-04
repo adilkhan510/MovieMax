@@ -19,6 +19,7 @@ const NavBar = ( props ) => {
     })
 
     return (
+        <>
         <AppBar className={classes.root}>
             <Toolbar>
                 <img className={classes.img} src="" alt='img' />
@@ -28,6 +29,8 @@ const NavBar = ( props ) => {
                 </Tabs>
             </Toolbar>
         </AppBar>
+        <div className={classes.toolbarMargin} />
+        </>
     )
 }
 

@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { withStyles } from '@material-ui/styles'
-import { Formik } from 'formik';
 import styles from '../styles/login'
 import { Typography, Paper, TextField, Button, Avatar} from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import formHook  from '../hooks/useFormState'
-
+import { UserContext } from '../Context/userContext'
 
 const Login = ( props ) => {
     const [email, handleEmail, resetEmail] = formHook('');
     const [password, handlePassword, resetPassword] = formHook('');
+    const { setCurrentUser } = useContext(UserContext)
+    const history = useHistory()
 
     const handleSubmit = async (event)=>{        
         event.preventDefault();
@@ -26,7 +28,8 @@ const Login = ( props ) => {
             body: JSON.stringify(user)
         })
         let result = await response.json();
-        console.log(result)
+        setCurrentUser(result)
+        history.push('/')
     }
 
     const { classes } = props;

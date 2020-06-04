@@ -7,6 +7,7 @@ import Login from './Auth/Login';
 import NavBar from './components/Navigation/NavBar';
 import Home from './components/Home/Home'
 import Profile from './components/Profile/Profile'
+import UserProvider from './Context/userContext'
 
 function App() {
   // useEffect(()=>{
@@ -25,16 +26,18 @@ function App() {
   // },[])
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-        <NavBar />
-        <Route>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/login" component={Login} />
-          </Switch>
-        </Route>
-      </ThemeProvider>
+      <UserProvider>
+        <ThemeProvider theme={theme}>
+          <NavBar />
+          <Route>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/login" component={Login} />
+            </Switch>
+          </Route>
+        </ThemeProvider>
+      </UserProvider>
     </div>
   );
 }
