@@ -1,13 +1,14 @@
 // Imports 
+
 const express = require('express')
 const app = express();
+const cors = require('cors')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const config = require('./config/key')
 const routes = require('./routes/api')
 require('dotenv').config()
-
 // -----Connect to the database
 mongoose.connect(config.mongoURI,
     {useNewUrlParser: true,useUnifiedTopology:true,
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use('/api', routes);
+
 
 // ---- Setting up server to listen on port 5000
 app.listen(5000,()=>{

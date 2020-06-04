@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const ctrl = require('../controllers');
+const auth = require('../middleware/auth')
 
 // ------show one user------
 router.get('/users/:id', ctrl.show)
 
 // show all users:: for showing purposes should use ROBO3T
 router.get('/users',ctrl.index)
+router.get('/users/auth', ctrl.authenticated)
 
 router.get('/users/:id/favorites', ctrl.getFavorites);
 

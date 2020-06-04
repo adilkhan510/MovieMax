@@ -2,8 +2,10 @@ const jwt = require('jsonwebtoken');
 
 // Everytime a logged in user wants to do something that requires sending a request to the backend it will go thru the auth function
 
-const auth = async (req,res,next)=>{
+const auth = (req,res,next)=>{
+
     try{
+        // First get the token.
         const token = req.header("token")
         const verified = jwt.verify(token,process.env.JWT_TOKEN);
         if(!verified){
@@ -11,6 +13,7 @@ const auth = async (req,res,next)=>{
                 error : "Token verification failed, auth denied"
             })
         }
+        // Add a user to the request, the token will have a id object.
         req.user = verified.id;
         next();
     } catch(err){
@@ -18,4 +21,9 @@ const auth = async (req,res,next)=>{
             error : "something went wrong"
         })
     }
+}
+
+
+module.exports ={
+    auth
 }

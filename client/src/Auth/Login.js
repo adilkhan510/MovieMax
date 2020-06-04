@@ -12,17 +12,21 @@ const Login = ( props ) => {
     const [email, handleEmail, resetEmail] = formHook('');
     const [password, handlePassword, resetPassword] = formHook('');
 
-    const handleSubmit = (event)=>{
+    const handleSubmit = async (event)=>{        
         event.preventDefault();
-        axios.get('/api/users',{ headers : {
-            "Content-Type" : "application/json"
-            }}).then(
-            res => {
-                console.log(res)
-            }
-        ).catch(err => {
-            console.log(err)
+        let user = {
+            email : email,
+            password : password
+        }
+        let response = await fetch('/api/users/login',{
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json;charset=utf-8"
+            },
+            body: JSON.stringify(user)
         })
+        let result = await response.json();
+        console.log(result)
     }
 
     const { classes } = props;

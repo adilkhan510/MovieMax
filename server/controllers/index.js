@@ -1,6 +1,7 @@
 const db = require('../model/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const auth = require('../middleware/auth')
 
 const register = async (req,res)=>{
     try{
@@ -33,6 +34,12 @@ const register = async (req,res)=>{
     }
 };
 
+const authenticated = (req,res)=>{
+    auth();
+    res.status(200).json({
+        id : req.id
+    })
+}
 const destroy = (req,res)=>{
     db.User.findByIdAndDelete(req.params.userId,(error,deletedUser)=>{
         if(error)return console.log(error);
@@ -82,9 +89,10 @@ const show = (req,res)=>{
 const login = async (req,res)=>{
     try{
         const { email, password } = req.body;
+        console.log(email, password)
         const existingUser = await db.User.findOne({email : email});
         if(!existingUser){
-            res.status(400).json({
+            return res.status(400).json({
                 error : "Invalid email or Password"
             })
         };
@@ -96,7 +104,7 @@ const login = async (req,res)=>{
         }
         const token = jwt.sign({id : existingUser._id},process.env.JWT_TOKEN)
         console.log(token)
-        res.status(201).json({
+        return res.status(201).json({
             token,
             email : existingUser.email,
             id : existingUser._id,
@@ -184,5 +192,6 @@ module.exports ={
     login,
     addMovie,
     getFavorites,
-    addToFavorites
+    addToFavorites,
+    authenticated
 }
