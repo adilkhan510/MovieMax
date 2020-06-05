@@ -16,7 +16,12 @@ const styles = (theme)=>({
         margin : "10px",
         background: "rgb(38,196,188)",
         background: "linear-gradient(135deg, rgba(38,196,188,0.4948354341736695) 70%, rgba(213,212,213,1) 100%)",
-
+    },
+    actorsContainer : {
+        width : "100vw",
+        margin: "15px 15px 15px 30px",
+        flexGrow : 1,
+        height : "auto"
     }
 })
 

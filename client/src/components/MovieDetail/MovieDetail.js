@@ -12,10 +12,12 @@ import { withStyles } from '@material-ui/styles'
 import styles from '../../styles/movieDetail'
 import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../config'
 import { MovieImage } from '../Home/MovieImage'
+import {MovieCard} from '../Home/MovieCard';
 
 const MovieDetail = (props) => {
     // Get the movie ID from the URL.
     const [movie, setMovie] = useState(null)
+    const [actors, setActors] = useState([])
     const movieId = props.match.params.id
     const { classes } = props
     console.log(movieId)
@@ -23,8 +25,16 @@ const MovieDetail = (props) => {
         fetch(`${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
         .then(res=> res.json())
         .then(res=>{
-            console.log(res)
             setMovie(res)
+            fetch(`${API_URL}/movie/${movieId}/credits?api_key=${API_KEY}`)
+            .then(res=>res.json())
+            .then(res=>{
+                setActors(res.cast);
+                console.log(res.cast)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         })
         .catch(err=>{
             console.log(err)
@@ -74,12 +84,32 @@ const MovieDetail = (props) => {
                         More Info
                     </Typography>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                </Typography>
-                </ExpansionPanelDetails>
+                    {
+                        actors && 
+                            <ExpansionPanelDetails>
+                                <Grid 
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                    spacing={1}
+                                    className={classes.actorsContainer} 
+                                >
+                                {
+                                    actors.map((actor,index)=>(
+                                    actor.profile_path &&    
+                                    <Grid item xs={6} md={3}>
+                                        <MovieCard key={index}
+                                        actorUrl={actor.profile_path && `${IMAGE_URL}/w500${actor.profile_path}`}
+                                        />
+                                    </Grid>
+                                    ))
+                                }
+                                </Grid>
+                            </ExpansionPanelDetails>
+
+                    }
+
             </ExpansionPanel>
         </>
     )
