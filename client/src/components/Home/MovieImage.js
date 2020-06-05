@@ -12,12 +12,11 @@ export const MovieImage = (props) => {
                 100%),
             url(${props.image}), #1c1c1c`,
             height: '450px',
-            backgroundSize: '90%, cover',
+            backgroundSize: '100%, cover',
             padding: "20px",
             backgroundPosition: 'center, center',
             width: '100%',
-            position: 'relative',
-            overflow : "hidden"
+            position: 'relative'
         }}
     >
         <div>

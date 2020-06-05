@@ -8,6 +8,7 @@ import NavBar from './components/Navigation/NavBar';
 import Home from './components/Home/Home'
 import Profile from './components/Profile/Profile'
 import UserProvider from './Context/userContext'
+import  MovieDetail from './components/MovieDetail/MovieDetail'
 
 function App() {
   // useEffect(()=>{
@@ -34,6 +35,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/movies/:id" component={ MovieDetail } />
             </Switch>
           </Route>
         </ThemeProvider>
