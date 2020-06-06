@@ -17,7 +17,7 @@ router.post('/users/login', ctrl.login)
 
 // Movie Routes 
 router.post('/movies/favorites',ctrl.getFavorites);
-router.post('/movies/addTofavorites',auth,ctrl.addToFavorites);
+router.post('/movies/addtofavorites',auth,ctrl.addToFavorites);
 
 
 

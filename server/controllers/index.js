@@ -38,6 +38,7 @@ const register = async (req,res)=>{
 const login = async (req,res)=>{
     try{
         const { email, password } = req.body;
+        console.log(req.body)
         console.log(email, password)
         const existingUser = await db.User.findOne({email : email});
         if(!existingUser){
@@ -91,7 +92,7 @@ const getFavorites = async (req,res)=>{
         console.log(movie.length)
         return res.status(200).json({
             success : true,
-            data : movie.length
+            length : movie.length
         })
     }catch(err){
         return res.status(400).json({
@@ -100,15 +101,42 @@ const getFavorites = async (req,res)=>{
     }
 }
 
-const addToFavorites =(req,res)=>{
-    db2.Favorites.create(req.body,(err,addedToFavorites)=>{
-        if(err) return res.status(400).json({
-            err: err
+const addToFavorites = async (req,res)=>{
+    try{
+        const user = {
+            user : req.user,
+            movieId : req.body.movieId,
+            movieTitle : req.body.movieTitle,
+            movieImage : req.body.movieImage
+        }
+        console.log("user....",user)
+        db2.Favorites.findOne({user : req.user, movieId : req.body.movieId},(err,foundDoc)=>{
+            if(foundDoc){
+                db2.Favorites.deleteOne(user,(err,deletedUser)=>{
+                    if(err) return res.status(400).json({
+                        err
+                    })
+                    res.status(200).json({
+                        deleted : true,
+                    })
+                })
+            }else{
+                db2.Favorites.create(user,(err,favoritedMovie)=>{
+                    if(err) return res.status(400).json({
+                        err
+                    })
+                    res.status(200).json({
+                        success: true,
+                        data : favoritedMovie
+                    })
+            })
+            }
+        });
+    }catch(err){
+        return res.status(400).json({
+            error: "Something went wrong."
         })
-        res.status(200).json({
-            data : addedToFavorites
-        })
-    })
+    }
 }
 
 module.exports ={

@@ -20,15 +20,15 @@ const Login = ( props ) => {
             email : email,
             password : password
         }
-        let response = await fetch('/api/users/login',{
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json;charset=utf-8"
-            },
-            body: JSON.stringify(user)
+        axios.post('http://localhost:5000/api/users/login', JSON.stringify(user), {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+            }).then(res=>{
+                localStorage.setItem('user', JSON.stringify(res.data))
+            }).catch(err=>{
+                console.log(err)
         })
-        let result = await response.json();
-        setCurrentUser(result)
         history.push('/')
     }
     const handleDummyAccount = async (event)=>{
@@ -37,17 +37,15 @@ const Login = ( props ) => {
             email : "test1111@gmail.com",
             password : "123456"
         }
-        let response = await fetch('/api/users/login',{
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json;charset=utf-8"
-            },
-            body: JSON.stringify(user)
+        axios.post('http://localhost:5000/api/users/login', JSON.stringify(user), {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+            }).then(res=>{
+                localStorage.setItem('user', JSON.stringify(res.data))
+            }).catch(err=>{
+                console.log(err)
         })
-        let result = await response.json();
-        setCurrentUser(result)
-        localStorage.setItem('user',result)
-        history.push('/')
     }
 
     const { classes } = props;

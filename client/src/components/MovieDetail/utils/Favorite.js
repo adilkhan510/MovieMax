@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Button } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { Button, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import axios from 'axios';
 
@@ -13,7 +13,8 @@ const useStyles = makeStyles({
 export const Favorite = (props) => {
     const classes = useStyles();
     const {movieId, movieInfo, movieImage} = props;
-
+    const [favNum, setFavNum] = useState(0)
+    const userInfo = JSON.parse(localStorage.getItem('user'))
     const details = {
         movieId : movieId,
         movieTitle : movieInfo.title,
@@ -22,11 +23,12 @@ export const Favorite = (props) => {
     useEffect(()=>{
         axios.post('http://localhost:5000/api/movies/favorites', details, {
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            'Content-Type': 'application/json; charset=UTF-8',
         }
         })
         .then(response => { 
-            console.log(response)
+            console.log(response.data.length)
+            setFavNum(response.data.length)
         })
         .catch(error => {
             console.log(error.response)
@@ -37,11 +39,17 @@ export const Favorite = (props) => {
         e.preventDefault();
         axios.post('http://localhost:5000/api/movies/addtofavorites', details, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                token : userInfo.token
             }
             })
             .then(response => { 
                 console.log(response)
+                if(response.data.success){
+                    setFavNum(favNum+1)
+                }else if(response.data.deleted) {
+                    setFavNum(favNum -1)
+                }
             })
             .catch(error => {
                 console.log(error.response)
@@ -55,7 +63,7 @@ export const Favorite = (props) => {
             variant="contained" 
             color="primary" 
             className={classes.button}>
-            Add To Favorites
+            Add To Favorites : {favNum}
             </Button>
         </div>
     )
