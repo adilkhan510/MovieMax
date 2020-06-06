@@ -31,13 +31,31 @@ const Login = ( props ) => {
         setCurrentUser(result)
         history.push('/')
     }
+    const handleDummyAccount = async (event)=>{
+        event.preventDefault();
+        let user = {
+            email : "test1111@gmail.com",
+            password : "123456"
+        }
+        let response = await fetch('/api/users/login',{
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json;charset=utf-8"
+            },
+            body: JSON.stringify(user)
+        })
+        let result = await response.json();
+        setCurrentUser(result)
+        localStorage.setItem('user',result)
+        history.push('/')
+    }
 
     const { classes } = props;
     return (
         <div className={classes.root}>
         <Paper className={classes.paper} elevation={6}>
             <Avatar className={classes.avatar}>
-                <LockIcon color="primary" fontSize="large" />
+                <LockIcon style={{color: "red"}} fontSize="large" />
             </Avatar>
             <form className={classes.form} onSubmit={handleSubmit}>
                 <TextField className={classes.textField}
@@ -57,17 +75,15 @@ const Login = ( props ) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
                     className={classes.submit}
                 >
                     Sign In
                 </Button>
                 <Button
-                    type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
                     className={classes.submit}
+                    onClick={handleDummyAccount}
                 >Test account</Button>
             </form>
         </Paper>

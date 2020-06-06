@@ -6,7 +6,6 @@ const styles = (theme)=>({
     paper : {
         width : "400px",
         height : "50vh",
-        backgroundColor : theme.palette.secondary.main,
         padding : "10px",
         position : "relative",
         left : "50%",
@@ -25,7 +24,8 @@ const styles = (theme)=>({
         margin : "10px"
     },
     submit : {
-        margin : "10px"
+        margin : "10px",
+        background : "yellow"
     },
     avatar : {
         left : "45%",

@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import { Paper, Grid, Typography, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core'
+import { Paper, Grid, Typography, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Inside Imports 
@@ -13,6 +13,7 @@ import styles from '../../styles/movieDetail'
 import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../config'
 import { MovieImage } from '../Home/MovieImage'
 import {MovieCard} from '../Home/MovieCard';
+import Favorite from './utils/Favorite'
 
 const MovieDetail = (props) => {
     // Get the movie ID from the URL.
@@ -20,7 +21,6 @@ const MovieDetail = (props) => {
     const [actors, setActors] = useState([])
     const movieId = props.match.params.id
     const { classes } = props
-    console.log(movieId)
     useEffect(()=>{
         fetch(`${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
         .then(res=> res.json())
@@ -45,6 +45,15 @@ const MovieDetail = (props) => {
             <div style={{width: "100%"}}>
                 <MovieImage image={movie && `${IMAGE_BASE_URL}${IMAGE_SIZE}${movie.backdrop_path}`} />
             </div>
+            {
+                movie && 
+                <Favorite 
+                movieId={movieId} 
+                movieImage={`${IMAGE_BASE_URL}${IMAGE_SIZE}${movie.backdrop_path}`}
+                movieInfo={movie} 
+            />
+            }
+ 
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
                 <Paper className={classes.gridItem} elevation={4}>
@@ -80,9 +89,9 @@ const MovieDetail = (props) => {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 >
-                    <Typography style={{display:"flex",justifyContent : "center", alignItems : "center", width :"100%"}}>
-                        More Info
-                    </Typography>
+                    <Button variant="contained" color="primary" style={{display:"flex",justifyContent : "center", alignItems : "center", width :"50%", marginLeft:"25%"}}>
+                        Toggle Actors
+                    </Button>
                 </ExpansionPanelSummary>
                     {
                         actors && 

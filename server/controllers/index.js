@@ -1,4 +1,5 @@
 const db = require('../model/user');
+const db2 = require('../model/favorite')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
@@ -34,58 +35,6 @@ const register = async (req,res)=>{
     }
 };
 
-const authenticated = (req,res)=>{
-    auth();
-    res.status(200).json({
-        id : req.id
-    })
-}
-const destroy = (req,res)=>{
-    db.User.findByIdAndDelete(req.params.userId,(error,deletedUser)=>{
-        if(error)return console.log(error);
-        res.json({
-            status: 200,
-            count: 1,
-            data : deletedUser,
-            requestedAt: new Date().toLocaleString()
-        });
-    });
-}
-
-const index = (req,res)=>{
-    db.User.find({},(error,allUsers)=>{
-        if(error) return console.log(error);
-        res.json({
-            status: 200,
-            count: allUsers.length,
-            data: allUsers,
-            requestedAt: new Date().toLocaleString()
-        });
-    });
-}
-
-const update =(req,res)=>{
-    db.User.findByIdAndUpdate(req.params.userId,req.body,{new:true},(error,updatedUser)=>{
-        if(error)return console.log(error);
-        res.json({
-            status: 200,
-            data: updatedUser,
-            requestedAt: new Date().toLocaleString(),
-        });
-    });
-}
-
-const show = (req,res)=>{
-    db.User.findOne(req.params.id, (error,foundUser)=>{
-        if(error) console.log(error);
-        res.json({
-            status: 201,
-            data: foundUser,
-            requestedAt: new Date().toLocaleString(),
-        })
-    })
-}; 
-
 const login = async (req,res)=>{
     try{
         const { email, password } = req.body;
@@ -102,8 +51,8 @@ const login = async (req,res)=>{
                 error : "Invalid Email or Password"
             })
         }
+        // Send back the token to the frontend. We will use this to verify the user whenever making requests from the frontend
         const token = jwt.sign({id : existingUser._id},process.env.JWT_TOKEN)
-        console.log(token)
         return res.status(201).json({
             token,
             email : existingUser.email,
@@ -117,81 +66,55 @@ const login = async (req,res)=>{
     }
 }
 
-const addMovie = (req,res) => {
-    const movie = req.body
-    console.log(movie)
-    db.User.findById(req.params.userId, (error, foundUser)=>{
-        if(error)return console.log(error);
-        db.Movies.findOne({tmdbID: movie}, (error, foundMovie)=>{
-            if(error)return console.log(error);
-            if(foundMovie){
-                foundUser.favoriteMovies.push(foundMovie._id);
-            } else {
-                db.Movies.create({tmdbID:movie}, (error, createdMovie)=>{
-                    if(error)return console.log(error);
-                    foundUser.favoriteMovies.push(createdMovie._id);
-                })
-            }
-            foundUser.save((error, savedUser)=>{
-                if(error)return console.log(error);
-                res.json({
-                    status: 200,
-                    data: savedUser,
-                    requestedAt: new Date().toLocaleString(),
-                });
-            });
-        })
-    });
-}
-
-const addToFavorites = (req,res)=>{
-    db.User.findById(req.params.userId, (error, foundUser)=>{
-        if(error) console.log("error", error)
-        if(foundUser){
-            console.log("Adding Movies")
-            console.log(req.body.movie)
-            console.log(foundUser.favoriteMovies)
-            foundUser.favoriteMovies.push(req.body.movie)
-        }
-        foundUser.save((error,savedUser)=>{
-            if(error) console.log(error)
-            else{
-                res.json({
-                    status: 200,
-                    data : savedUser.favoriteMovies
-                })
-            }
-        })
-    })
-
-}
-
-const getFavorites=(req,res)=>{
-    console.log('Req Came thru')
-    db.User.findById(req.params.id,(error,foundUser)=>{
-        if(error) console.log(error);
-        if(foundUser){
-            const data = foundUser.favoriteMovies
-            console.log(data)
+const getUserInfo = (req,res)=>{
+    auth(req,res,()=>{
+        db.User.findById(req.user,(error,foundUser)=>{
+            if(error) return console.log(error);
             res.json({
-                status : 200,
-                data : data
-            })
-            console.log(res.json)
-        }
+                status: 200,
+                data: foundUser,
+                requestedAt: new Date().toLocaleString()
+            });
+        });
     })
 }
 
+const getFavorites = async (req,res)=>{
+    try{
+        const movie = await db2.Favorites.find({movieId : req.body.movieId});
+        console.log(movie)
+        if(!movie){
+            return res.status(400).json({
+                error : "Nothing exists"
+            })
+        };
+        console.log(movie.length)
+        return res.status(200).json({
+            success : true,
+            data : movie.length
+        })
+    }catch(err){
+        return res.status(400).json({
+            error: "Something went wrong."
+        })
+    }
+}
+
+const addToFavorites =(req,res)=>{
+    db2.Favorites.create(req.body,(err,addedToFavorites)=>{
+        if(err) return res.status(400).json({
+            err: err
+        })
+        res.status(200).json({
+            data : addedToFavorites
+        })
+    })
+}
 
 module.exports ={
-    show,
-    update,
     register,
-    destroy,
-    index,
+    getUserInfo,
     login,
-    addMovie,
     getFavorites,
-    addToFavorites,
-    authenticated
+    addToFavorites
 }

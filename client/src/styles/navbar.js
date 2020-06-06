@@ -1,7 +1,7 @@
 const styles = (theme)=>({
     root: {
         flexGrow: 1,
-        background : theme.palette.secondary.light
+        background : "yellow"
     },
     title: {
         flexGrow: 1,
@@ -15,7 +15,7 @@ const styles = (theme)=>({
         textTransform : "none",
         fontWeight : "700",
         minWidth : "10",
-        color : "#000000"
+        color : "#white"
     },
     img : {
         borderRadius : "100px",

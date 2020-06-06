@@ -16,6 +16,9 @@ const theme = createMuiTheme({
         },
         orange : {
             main : "#e76f51"
+        },
+        yellow : {
+            main : "yellow"
         }
     }
 })

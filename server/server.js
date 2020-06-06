@@ -1,5 +1,4 @@
 // Imports 
-
 const express = require('express')
 const app = express();
 const cors = require('cors')
@@ -9,6 +8,13 @@ const cookieParser = require('cookie-parser')
 const config = require('./config/key')
 const routes = require('./routes/api')
 require('dotenv').config()
+
+const corsOptions = {
+    origin:['http://localhost:3000'],
+    credentials: true,
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions))
 // -----Connect to the database
 mongoose.connect(config.mongoURI,
     {useNewUrlParser: true,useUnifiedTopology:true,
@@ -19,6 +25,7 @@ mongoose.connect(config.mongoURI,
 })
 
 // ----setting up middleware 
+
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json())
 app.use(cookieParser())

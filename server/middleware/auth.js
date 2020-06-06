@@ -8,6 +8,7 @@ const auth = (req,res,next)=>{
         // First get the token.
         const token = req.header("token")
         const verified = jwt.verify(token,process.env.JWT_TOKEN);
+        console.log(verified)
         if(!verified){
             return res.status(401).json({
                 error : "Token verification failed, auth denied"
@@ -24,6 +25,4 @@ const auth = (req,res,next)=>{
 }
 
 
-module.exports ={
-    auth
-}
+module.exports = auth

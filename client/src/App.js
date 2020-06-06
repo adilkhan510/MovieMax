@@ -35,7 +35,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/movies/:id" component={ MovieDetail } />
+              <Route exact path="/:id" component={ MovieDetail } />
             </Switch>
           </Route>
         </ThemeProvider>
