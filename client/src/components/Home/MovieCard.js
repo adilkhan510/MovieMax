@@ -10,7 +10,7 @@ export const MovieCard = (props) => {
         )
     }else{
     return (
-        <a href={`/${props.id}`}>
+        <a href={`/movie/${props.id}`}>
             <Paper style={{width:"100%", height : "100%"}} >
                 <img src={props.movieUrl} style={{width:"100%",height:"390px"}} />
             </Paper>

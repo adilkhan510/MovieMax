@@ -80,7 +80,9 @@ const getUserInfo = (req,res)=>{
     })
 }
 
+// Get all favorites
 const getFavorites = async (req,res)=>{
+    const userId = req.body.id
     try{
         const movie = await db2.Favorites.find({movieId : req.body.movieId});
         console.log(movie)
@@ -101,6 +103,7 @@ const getFavorites = async (req,res)=>{
     }
 }
 
+// User adding to favorites.
 const addToFavorites = async (req,res)=>{
     try{
         const user = {
@@ -138,11 +141,38 @@ const addToFavorites = async (req,res)=>{
         })
     }
 }
+// Get user favorites 
+const getUserFavorites = async (req,res)=>{
+    const user = req.user
+    console.log(user)
+    try{
+
+        const movies = await db2.Favorites.find({user : user});
+        console.log(movies)
+        if(!movies){
+            return res.status(400).json({
+                error : "User has not added any movies to the favorites"
+            })
+        };
+        console.log(movies)
+        return res.status(200).json({
+            success : true,
+            movieList : movies
+        })
+    }catch(err){
+        return res.status(400).json({
+            error: "Something went wrong.",
+            err
+        })
+    }
+}
+
 
 module.exports ={
     register,
     getUserInfo,
     login,
     getFavorites,
-    addToFavorites
+    addToFavorites,
+    getUserFavorites
 }

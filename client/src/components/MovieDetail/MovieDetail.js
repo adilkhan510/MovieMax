@@ -20,12 +20,15 @@ const MovieDetail = (props) => {
     const [movie, setMovie] = useState(null)
     const [actors, setActors] = useState([])
     const movieId = props.match.params.id
+    const [moviePoster, setMoviePoster] = useState('')
+    console.log(movie)
     const { classes } = props
     useEffect(()=>{
         fetch(`${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
         .then(res=> res.json())
         .then(res=>{
             setMovie(res)
+            console.log(res)
             fetch(`${API_URL}/movie/${movieId}/credits?api_key=${API_KEY}`)
             .then(res=>res.json())
             .then(res=>{
@@ -49,7 +52,7 @@ const MovieDetail = (props) => {
                 movie && 
                 <Favorite 
                 movieId={movieId} 
-                movieImage={`${IMAGE_BASE_URL}${IMAGE_SIZE}${movie.backdrop_path}`}
+                movieImage={`${IMAGE_URL}/w500${movie.poster_path}`}
                 movieInfo={movie} 
             />
             }

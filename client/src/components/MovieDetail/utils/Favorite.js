@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../../config'
 import axios from 'axios';
 
 const useStyles = makeStyles({
@@ -14,8 +15,10 @@ export const Favorite = (props) => {
     const classes = useStyles();
     const {movieId, movieInfo, movieImage} = props;
     const [favNum, setFavNum] = useState(0)
+    const [favorited, setFavorited] = useState('Add to Favorites')
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const details = {
+        id : userInfo.id,
         movieId : movieId,
         movieTitle : movieInfo.title,
         movieImage : movieImage,
@@ -37,7 +40,7 @@ export const Favorite = (props) => {
 
     const addToFavorites=(e)=>{
         e.preventDefault();
-        axios.post('http://localhost:5000/api/movies/addtofavorites', details, {
+        axios.post('http://localhost:5000/api/movies/togglefavorites', details, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 token : userInfo.token
@@ -47,8 +50,10 @@ export const Favorite = (props) => {
                 console.log(response)
                 if(response.data.success){
                     setFavNum(favNum+1)
+                    setFavorited("Remove From Favorites")
                 }else if(response.data.deleted) {
                     setFavNum(favNum -1)
+                    setFavorited("Add to Favorites")
                 }
             })
             .catch(error => {
@@ -63,7 +68,7 @@ export const Favorite = (props) => {
             variant="contained" 
             color="primary" 
             className={classes.button}>
-            Add To Favorites : {favNum}
+             {favorited }: {favNum}
             </Button>
         </div>
     )

@@ -9,6 +9,7 @@ import Home from './components/Home/Home'
 import Profile from './components/Profile/Profile'
 import UserProvider from './Context/userContext'
 import  MovieDetail from './components/MovieDetail/MovieDetail'
+import FavoritesPage from './components/FavoritesPage/FavoritesPage'
 
 function App() {
   // useEffect(()=>{
@@ -35,7 +36,8 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/:id" component={ MovieDetail } />
+              <Route exact path="/movie/:id" component={ MovieDetail } />
+              <Route exact path="/favorites" component={FavoritesPage} />
             </Switch>
           </Route>
         </ThemeProvider>
