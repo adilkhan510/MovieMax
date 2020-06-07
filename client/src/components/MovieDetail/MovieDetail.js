@@ -14,6 +14,7 @@ import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../co
 import { MovieImage } from '../Home/MovieImage'
 import {MovieCard} from '../Home/MovieCard';
 import Favorite from './utils/Favorite'
+import {Comments} from './Comments/Comments'
 
 const MovieDetail = (props) => {
     // Get the movie ID from the URL.
@@ -85,6 +86,8 @@ const MovieDetail = (props) => {
                     </Paper>
                 </Grid>
             </Grid>
+            <Divider />
+            <Comments />
             <Divider />
             <ExpansionPanel>
                 <ExpansionPanelSummary
