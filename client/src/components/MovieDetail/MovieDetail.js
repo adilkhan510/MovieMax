@@ -4,8 +4,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import { Paper, Grid, Typography, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button } from '@material-ui/core'
+import { Paper, Grid, Typography, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button} from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 // Inside Imports 
 import { withStyles } from '@material-ui/styles'
@@ -46,48 +47,96 @@ const MovieDetail = (props) => {
     },[])
     return (
         <>
-            <div style={{width: "100%"}}>
-                <MovieImage image={movie && `${IMAGE_BASE_URL}${IMAGE_SIZE}${movie.backdrop_path}`} />
-            </div>
-            {
-                movie && 
-                <Favorite 
-                movieId={movieId} 
-                movieImage={`${IMAGE_URL}/w500${movie.poster_path}`}
-                movieInfo={movie} 
-            />
-            }
- 
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={4}>
-                <Paper className={classes.gridItem} elevation={4}>
-                        <Typography>
-                            Rating : { movie && movie.vote_average}
+        <div style={{width:"95vw", margin:"2%"}}>
+            
+            <Grid container spacing={2}
+                className={classes.movieContainer}
+                direction=""
+            >
+                <Grid item>
+                    <Paper elevation={5} className={classes.header}>
+                    <div className={classes.title}>
+                        <Typography variant="h3" className={classes.text}>
+                            {movie && movie.title}-(
+                            {
+                                movie && movie.release_date.split("-")[0]
+                            })
                         </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper className={classes.gridItem} elevation={4}>
-                        <Grid item xs={12} style={{display: "flex", flexDirection:"row",justifyContent:"space-evenly"}}>
-                            {movie && movie.genres.map((g)=>(
-                                <>
-                                <Typography>{g.name}</Typography>
-                                <Divider orientation="vertical" flexItem  />
-                                </>
-                                ))}
+                        {
+                            movie && 
+                            <Favorite 
+                            movieId={movieId} 
+                            movieImage={`${IMAGE_URL}/w500${movie.poster_path}`}
+                            movieInfo={movie} 
+                        />
+                        }
+                    </div>
+                    <Grid className={classes.smallInfo}
+                    direction = "row"
+                    justify="space-evenly"
+                    alignContent="center"
+                    container>
+                        <Grid className={classes.smallInfoText} item>
+                            <Typography>
+                            Run time : {movie && movie.runtime} mins
+                            </Typography>
                         </Grid>
+                        <Divider orientation="vertical" />
+                        <Grid className={classes.genres} item>
+                            {
+                                movie && movie.genres.map((m,index)=>(
+                                    <Typography key={index}>{m.name}</Typography>
+                                ))
+                            }
+                            </Grid>
+                        <Divider orientation="vertical" />
+                    </Grid>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                <Paper className={classes.gridItem} elevation={4}>
-                        <Typography>
-                            Year released : {movie && movie.release_date}
-                        </Typography>
-                    </Paper>
+                <Grid item>
+                    <Grid container
+                    className={classes.movieInsideContainer}
+                    direction="row">
+                        <Grid item xs={6} className={classes.movieImageContainer}>
+                            <MovieCard movieUrl={movie && `${IMAGE_URL}/w500${movie.poster_path}`} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Grid container className={classes.detailedContainer}>
+                                <Grid item xs={12}>
+                                    <Paper className={classes.production} elevation={6}>
+                                        <Typography>
+                                            Overview
+                                        </Typography>
+                                    </Paper>
+                                    {
+                                        movie && 
+                                        <Paper className={classes.description}>
+                                            {movie.overview}
+                                        </Paper>
+
+                                    }
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Paper className={classes.production} elevation={6}>
+                                        <Typography>
+                                            Produced By
+                                        </Typography>
+                                    </Paper>
+                                    <Paper className={classes.productionCompanies}>
+                                        {
+                                            movie && movie.production_companies.map((c,index)=>(
+                                                c.logo_path &&                                             <img src={`${IMAGE_URL}/w500${c.logo_path}`} className={classes.pImg} />
+                                            ))
+                                        }
+                                    </Paper>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
             <Divider />
-            <Comments />
+            <Comments  />
             <Divider />
             <ExpansionPanel>
                 <ExpansionPanelSummary
@@ -124,8 +173,8 @@ const MovieDetail = (props) => {
                             </ExpansionPanelDetails>
 
                     }
-
             </ExpansionPanel>
+            </div>
         </>
     )
 }

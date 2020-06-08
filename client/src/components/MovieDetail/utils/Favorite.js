@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Paper } from '@material-ui/core'
+import { Button, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../../config'
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import axios from 'axios';
 
 const useStyles = makeStyles({
     button: {
         marginLeft : "auto",
-        marginTop : "10px"
+        fontSize : "1rem",
+        width : "100%"
+    },
+    icon : {
+        fontSize : "1.5rem",
+        color : "red",
+    },
+    favoritedBy : {
+        padding : "0.5rem",
+        marginTop : "0.2rem"
     }
 });
 
@@ -62,14 +72,19 @@ export const Favorite = (props) => {
     }
 
     return (
-        <div style={{width:"95vw", display:"flex"}}>
+        <div>
             <Button 
             onClick={addToFavorites}
-            variant="contained" 
-            color="primary" 
+            variant="outlined"  
             className={classes.button}>
-             {favorited }: {favNum}
+            <FavoriteIcon className={classes.icon} />
+             {favorited}
             </Button>
+            <Paper className={classes.favoritedBy}>
+                <Typography>
+                    Favorited by : {favNum} users
+                </Typography>
+            </Paper>
         </div>
     )
 }
