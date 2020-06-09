@@ -28,9 +28,9 @@ const useStyles= makeStyles((theme)=>({
 function App() {
   const [isLoading, setLoading ] = useState(true)
   const classes = useStyles()
-  useEffect(async ()=>{
+  useEffect(()=>{
     // init function returns true when it fetches
-    const res = await init();
+    const res = init();
     res ? setLoading(false) : setLoading(true)
   },[])
 
@@ -41,7 +41,6 @@ function App() {
         <ThemeProvider theme={theme}>
           <NavBar />
           <div className={classes.mainContainer}>
-            {/* <NavBar /> */}
             {
               isLoading ? <div>Loading....</div> : <Sidebar />
             }
