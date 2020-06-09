@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState} from 'react';
 import { Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core'
-import './App.css';
+import { makeStyles } from '@material-ui/styles'
 import theme from "./styles/muiTheme"
 import Login from './Auth/Login';
 import NavBar from './components/Navigation/NavBar';
@@ -10,36 +10,45 @@ import Profile from './components/Profile/Profile'
 import UserProvider from './Context/userContext'
 import  MovieDetail from './components/MovieDetail/MovieDetail'
 import FavoritesPage from './components/FavoritesPage/FavoritesPage'
+import { Sidebar } from './components/Sidebar/Sidebar';
+import { init } from './actions/actions'
+import { MovieList } from './components/Landing/MovieList';
+
+
+const useStyles= makeStyles((theme)=>({
+  mainContainer : {
+    display : "flex",
+    direction : "row",
+    justifyContent : "flex-start",
+    height: "100%",
+    width: "100"
+  }
+}))
 
 function App() {
-  // useEffect(()=>{
-  //   fetch("/api/users",
-  //   {
-  //     headers:{
-  //         "accepts" : "application/json"
-  //     }
-  //   })
-  //   .then(res => {
-  //       console.log(res);
-  //       return res.json();
-  //   })
-  //   .then(json => console.log(json))
-  //   .catch( a => { console.log(a)})
-  // },[])
+  const [isLoading, setLoading ] = useState(true)
+  const classes = useStyles()
+  useEffect(async ()=>{
+    // init function returns true when it fetches
+    const res = await init();
+    res ? setLoading(false) : setLoading(true)
+  },[])
+
+
   return (
     <div className="App">
       <UserProvider>
         <ThemeProvider theme={theme}>
           <NavBar />
-          <Route>
+          <div className={classes.mainContainer}>
+            {/* <NavBar /> */}
+            {
+              isLoading ? <div>Loading....</div> : <Sidebar />
+            }
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/profile" component={Profile} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/movie/:id" component={ MovieDetail } />
-              <Route exact path="/favorites" component={FavoritesPage} />
+              <Route exact path="/discover/:name" component={MovieList} />
             </Switch>
-          </Route>
+            </div>
         </ThemeProvider>
       </UserProvider>
     </div>

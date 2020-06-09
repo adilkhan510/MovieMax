@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme=>({
         top : "-20%",
         left : "0.5%",
         padding: "5px",
+        textTransform : "none"
     },
     root : {
         margin : "20px",

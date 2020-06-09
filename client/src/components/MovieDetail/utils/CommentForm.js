@@ -12,7 +12,8 @@ const useStyles = makeStyles({
         width : "70%",
     },
     button : {
-        margin : "5px 10px"
+        margin : "5px 10px",
+        textTransform : "none"
     }
 })
 

@@ -21,6 +21,7 @@ const MovieDetail = (props) => {
     // Get the movie ID from the URL.
     const [movie, setMovie] = useState(null)
     const [actors, setActors] = useState([])
+    const [bg, setBg] = useState(null)
     const movieId = props.match.params.id
     const [moviePoster, setMoviePoster] = useState('')
     console.log(movie)
@@ -30,7 +31,7 @@ const MovieDetail = (props) => {
         .then(res=> res.json())
         .then(res=>{
             setMovie(res)
-            console.log(res)
+            setBg(`${IMAGE_URL}/w500{movie.backdrop_path}`)
             fetch(`${API_URL}/movie/${movieId}/credits?api_key=${API_KEY}`)
             .then(res=>res.json())
             .then(res=>{
@@ -47,51 +48,54 @@ const MovieDetail = (props) => {
     },[])
     return (
         <>
-        <div style={{width:"95vw", margin:"2%"}}>
-            
+        <div style={{width:"auto", margin:"2% 0px", overflow:"hidden"}}>
             <Grid container spacing={2}
                 className={classes.movieContainer}
-                direction=""
-            >
-                <Grid item>
-                    <Paper elevation={5} className={classes.header}>
-                    <div className={classes.title}>
-                        <Typography variant="h3" className={classes.text}>
-                            {movie && movie.title}-(
-                            {
-                                movie && movie.release_date.split("-")[0]
-                            })
-                        </Typography>
-                        {
-                            movie && 
-                            <Favorite 
-                            movieId={movieId} 
-                            movieImage={`${IMAGE_URL}/w500${movie.poster_path}`}
-                            movieInfo={movie} 
-                        />
-                        }
-                    </div>
-                    <Grid className={classes.smallInfo}
-                    direction = "row"
-                    justify="space-evenly"
-                    alignContent="center"
-                    container>
-                        <Grid className={classes.smallInfoText} item>
-                            <Typography>
-                            Run time : {movie && movie.runtime} mins
+                direction="row"
+                >
+                <Grid container direction="row" className={classes.headerContainer}>
+                        <div>
+                            <Typography variant="h3" className={classes.text}>
+                                {movie && movie.title}-(
+                                {
+                                    movie && movie.release_date.split("-")[0]
+                                })
                             </Typography>
-                        </Grid>
-                        <Divider orientation="vertical" />
-                        <Grid className={classes.genres} item>
-                            {
-                                movie && movie.genres.map((m,index)=>(
-                                    <Typography key={index}>{m.name}</Typography>
-                                ))
-                            }
+                            <Grid className={classes.smallInfo}
+                                direction = "row"
+                                justify="space-evenly"
+                                alignContent="center"
+                                container>
+                                <Grid className={classes.smallInfoText} item>
+                                    <Typography>
+                                    Run time : {movie && movie.runtime} mins
+                                    </Typography>
+                                </Grid>
+                                <Divider orientation="vertical" />
+                                <Grid className={classes.genres} item>
+                                    {
+                                        movie && movie.genres.map((m,index)=>(
+                                            <Typography key={index}>{m.name}</Typography>
+                                        ))
+                                    }
+                                </Grid>
+                                <Divider orientation="vertical" />
                             </Grid>
-                        <Divider orientation="vertical" />
-                    </Grid>
-                    </Paper>
+                        </div>
+                    <Grid item xs={12} md={6}>
+                                <div className={classes.buttonContainer}>
+                                {
+                                    movie && 
+                                    <Favorite 
+                                    movieId={movieId} 
+                                    movieImage={`${IMAGE_URL}/w500${movie.poster_path}`}
+                                    movieInfo={movie} 
+                                />
+                                }</div>
+                        </Grid>
+                </Grid>
+            </Grid>
+                <Grid>
                 </Grid>
                 <Grid item>
                     <Grid container
@@ -103,7 +107,7 @@ const MovieDetail = (props) => {
                         <Grid item xs={6}>
                             <Grid container className={classes.detailedContainer}>
                                 <Grid item xs={12}>
-                                    <Paper className={classes.production} elevation={6}>
+                                    <Paper className={classes.production} elevation={10}>
                                         <Typography>
                                             Overview
                                         </Typography>
@@ -117,7 +121,7 @@ const MovieDetail = (props) => {
                                     }
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Paper className={classes.production} elevation={6}>
+                                    <Paper className={classes.production} elevation={10}>
                                         <Typography>
                                             Produced By
                                         </Typography>
@@ -125,7 +129,7 @@ const MovieDetail = (props) => {
                                     <Paper className={classes.productionCompanies}>
                                         {
                                             movie && movie.production_companies.map((c,index)=>(
-                                                c.logo_path &&                                             <img src={`${IMAGE_URL}/w500${c.logo_path}`} className={classes.pImg} />
+                                                c.logo_path &&                                             <img src={`${IMAGE_URL}/w45${c.logo_path}`} className={classes.pImg} />
                                             ))
                                         }
                                     </Paper>
@@ -134,19 +138,20 @@ const MovieDetail = (props) => {
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
             <Divider />
             <Comments  />
             <Divider />
-            <ExpansionPanel>
+            <ExpansionPanel  className={classes.expansionPanel}>
                 <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 >
-                    <Button variant="contained" color="primary" style={{display:"flex",justifyContent : "center", alignItems : "center", width :"50%", marginLeft:"25%"}}>
-                        Toggle Actors
-                    </Button>
+                    <div className={classes.expansionButton}>
+                        <Button variant="contained" color="primary">
+                            Toggle Actors
+                        </Button>
+                    </div>
+
                 </ExpansionPanelSummary>
                     {
                         actors && 
@@ -171,7 +176,6 @@ const MovieDetail = (props) => {
                                 }
                                 </Grid>
                             </ExpansionPanelDetails>
-
                     }
             </ExpansionPanel>
             </div>

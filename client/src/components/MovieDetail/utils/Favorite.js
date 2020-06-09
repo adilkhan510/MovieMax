@@ -5,21 +5,26 @@ import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../..
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import axios from 'axios';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     button: {
-        marginLeft : "auto",
         fontSize : "1rem",
-        width : "100%"
+        width : "100%",
+        color : "black",
+        textTransform : "none",
     },
     icon : {
         fontSize : "1.5rem",
         color : "red",
     },
+    notFavorited : {
+        fontSize : "1.5rem",
+        color : "black",
+    },
     favoritedBy : {
         padding : "0.5rem",
-        marginTop : "0.2rem"
+        marginTop : "0.5rem"
     }
-});
+}));
 
 export const Favorite = (props) => {
     const classes = useStyles();
@@ -77,10 +82,10 @@ export const Favorite = (props) => {
             onClick={addToFavorites}
             variant="outlined"  
             className={classes.button}>
-            <FavoriteIcon className={classes.icon} />
-             {favorited}
+                <FavoriteIcon className={favorited ? `${classes.icon}` : `${classes.notFavorited}`} />
+                {favorited}
             </Button>
-            <Paper className={classes.favoritedBy}>
+            <Paper className={classes.favoritedBy} elevation={6}>
                 <Typography>
                     Favorited by : {favNum} users
                 </Typography>

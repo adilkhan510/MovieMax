@@ -38,16 +38,17 @@ const styles = (theme)=>({
         display : "flex",
         alignItems : "center",
         justifyContent : "space-between",
-        width : "100%"
     },
     text : {
-        color : "black"
+        color : "black",
+        display : "flex",
+        alignItems : "flex-start",
+        textTransform : "none"
     },
     header : {
         display : "flex",
         flexDirection : "column",
         background : theme.palette.secondary.light,
-        width : "95vw"
     },
     smallInfo : {
         margin : "1rem 0rem",
@@ -72,7 +73,7 @@ const styles = (theme)=>({
         marginTop : "1rem"
     },
     description : {
-        padding : "2rem",
+        padding : "1rem",
         lineHeight : "1.5rem"
     },
     productionCompanies : {
@@ -82,8 +83,8 @@ const styles = (theme)=>({
         padding : "1rem"
     },
     pImg : {
-        maxWidth : "70px",
-        maxHeight : "80px"
+        // maxWidth : "70px",
+        // maxHeight : "80px"
     },
     production : {
         position : "relative",
@@ -96,8 +97,27 @@ const styles = (theme)=>({
         background : theme.palette.yellow.main,
         borderRadius : "0px",
         padding : "0.3rem",
-        border : "0.5px solid black"
+        border : "0.5px solid yellow"
     },
+    headerContainer : {
+        display : "flex",
+        flexDirection : "row",
+        justifyContent : "space-between",
+        alignItems : "center",
+        padding : "1rem"
+    },
+    expansionButton : {
+        display : "flex",
+        flexDirection : "row",
+        justifyContent : "center",
+        alignItems : "center",
+        width : "100%"
+    },
+    buttonContainer : {
+        maxWidth : "15rem",
+        marginLeft : "auto",
+        marginRight : "1.5rem"
+    }
 })
 
 export default styles
