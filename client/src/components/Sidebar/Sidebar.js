@@ -9,15 +9,19 @@ const useStyles = makeStyles(theme=>({
     root : {
         display: "flex",
         flexDirection: "column",
+        justifyContent : "flex-start",
         maxWidth: "10rem",
         padding: "2rem",
-        borderRight: `1px solid ${theme.palette.primary.main}`,
     },
     menuItem : {
         color : "black",
         display : "flex",
         justifyContent : "center",
-        alignItems : "center"
+        alignItems : "center",
+        fontSize: "0.8rem",
+        textTransform: "uppercase",
+        letterSpacing: "-0.5px",
+        color : "grey"
     },
     href : {
         textDecoration : "none",
@@ -32,11 +36,12 @@ const useStyles = makeStyles(theme=>({
         padding: "2rem",
     },
     header : {
-        fontWeight: "700",
+        fontWeight: "400",
         fontSize: "1rem",
         textTransform: "uppercase",
         letterSpacing: "-0.5px",
-        margin : "1rem"
+        margin : "1rem",
+        color : "grey"
     },
     browse : {
         
@@ -44,12 +49,15 @@ const useStyles = makeStyles(theme=>({
     insideContainer : {
         display: "flex",
         flexDirection: "column",
+        justifyContent : "flex-start",
+        width : "100%"
     },
-    headerContainer: {
-        marginBottom : "2rem"
+    headerContainer : {
+        width : "fit-content",
+        margin : '2rem 2rem 1rem 1rem',
     },
-    headerContainer2: {
-        margin : "3rem 0 2rem 0"
+    hover : {
+        border : "1px solid red "
     }
 }))
 
@@ -57,17 +65,17 @@ export const Sidebar = (props) => {
     const classes = useStyles()
     const genres = JSON.parse(localStorage.getItem('genres'));
     const [id, setId] = useState(localStorage.getItem('gId') || 28);
+    const location = parseInt(window.location.pathname.split('/')[2])
 
     return (
         <StickyBox>
-            <div className={classes.root}>
             <div>
                 <Paper className={classes.headerContainer}>
                     <Typography className={classes.header}>
                         Discover
                     </Typography>
                 </Paper>
-                <div className={classes.insideContainer}>
+                <div className={classes.root}>
                 <a href="/browse/popular" className={classes.href}>
                     <MenuItem
                     className={classes.menuItem}
@@ -85,29 +93,28 @@ export const Sidebar = (props) => {
                 </a>
                 </div>
             </div>
-
             <div>
-                <Paper className={classes.headerContainer2}>
+                <Paper className={classes.headerContainer}>
                     <Typography className={classes.header}>
                         Genres
                     </Typography>
                 </Paper>
-                <div className={classes.insideContainer}>
+                <div className={classes.root}>
                 {
                     genres &&
                     genres.map((g,index)=>(
                         <a href={`/discover/${g.id}`} className={classes.href}>
                             <MenuItem
-                            className={classes.menuItem}
+                            // Check to see if the location is the same as the category. If so highlight it.
+                            className={location === g.id ? `${classes.menuItem} ${classes.hover}` : `${classes.menuItem}`}
                             disableGutters={true}
-                            key={index}>
+                            key={g.id}>
                             {g.name}
                             </MenuItem>
                         </a>
                     ))
                 }
                 </div>
-            </div>
             </div>
         </StickyBox>
     )

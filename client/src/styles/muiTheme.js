@@ -20,6 +20,11 @@ const theme = createMuiTheme({
         yellow : {
             main : "#FFF269"
         }
+    },
+    typography : {
+        textTransform: "uppercase",
+        letterSpacing: "-0.5px",
+        color : "grey"
     }
 })
 

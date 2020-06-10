@@ -14,7 +14,7 @@ export const fetchGenres= ()=> {
 }
 
 // Get movies
-export const fetchMovies = async (genre, page) => { 
+export const fetchMoviesByGenre = async (genre, page) => { 
     console.log(genre)
     const endpoint = `${API_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genre}`
     try{
@@ -35,6 +35,17 @@ export const fetchCasts = (movieId) => {
     .catch(err=>{
         console.log(err)
     })
+}
+
+export const fetchMovieInfo = async (id) => {
+    const endpoint = `${API_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`
+    try{
+        const movies = await Axios.get(endpoint);
+        console.log("1 made api call",movies)
+        return movies.data
+    }catch(err){
+        console.log(err)
+    }
 }
 
 // init function : Runs before the main App runs :

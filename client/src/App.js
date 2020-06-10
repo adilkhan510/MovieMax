@@ -12,6 +12,7 @@ import  MovieDetail from './components/MovieDetail/MovieDetail'
 import FavoritesPage from './components/FavoritesPage/FavoritesPage'
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { init } from './actions/actions'
+import {MovieDetails} from './components/MovieDetails/MovieDetails'
 import { MovieList } from './components/Landing/MovieList';
 
 
@@ -46,6 +47,7 @@ function App() {
             }
             <Switch>
               <Route exact path="/discover/:name" component={MovieList} />
+              <Route exact path="/movie/:id" component={MovieDetails} />
             </Switch>
             </div>
         </ThemeProvider>

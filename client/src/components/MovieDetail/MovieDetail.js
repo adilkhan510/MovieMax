@@ -16,6 +16,7 @@ import { MovieImage } from '../Home/MovieImage'
 import {MovieCard} from '../Home/MovieCard';
 import Favorite from './utils/Favorite'
 import {Comments} from './Comments/Comments'
+import Axios from 'axios';
 
 const MovieDetail = (props) => {
     // Get the movie ID from the URL.
@@ -27,8 +28,7 @@ const MovieDetail = (props) => {
     console.log(movie)
     const { classes } = props
     useEffect(()=>{
-        fetch(`${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
-        .then(res=> res.json())
+        Axios.get(`${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
         .then(res=>{
             setMovie(res)
             setBg(`${IMAGE_URL}/w500{movie.backdrop_path}`)

@@ -1,7 +1,6 @@
 const styles = (theme)=>({
     root: {
         flexGrow: 1,
-        background : theme.palette.yellow.main
     },
     title: {
         flexGrow: 1,
@@ -18,9 +17,9 @@ const styles = (theme)=>({
         color : "#white"
     },
     img : {
-        borderRadius : "100px",
-        height : "60px",
-        width : "60px",
+        height : "65px",
+        width : "65px",
+        marginTop : "10px"
     },
     toolbarMargin : {
         ...theme.mixins.toolbar

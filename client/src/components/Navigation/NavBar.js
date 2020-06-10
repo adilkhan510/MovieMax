@@ -25,8 +25,8 @@ const NavBar = ( props ) => {
         return(
             <>
             <AppBar className={classes.root}>
-                <Toolbar style={{height: "30px"}}>
-                    <a href="/"><img className={classes.img} src={logo} alt='img' /></a>
+                <Toolbar>
+                    <img className={classes.img} src={logo} alt='img' />
                     {/* <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
                         <Tab value={0} label="Home" component={Link} to="/" style={{color : "black"}} />
                         <Tab value={1} label="My Profile" component={Link} to="/profile" style={{color : "black"}}/>
