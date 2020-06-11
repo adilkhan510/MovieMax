@@ -9,8 +9,7 @@ const useStyles = makeStyles((theme)=>({
     button: {
         fontSize : "1rem",
         width : "100%",
-        color : "black",
-        textTransform : "none",
+        ...theme.typography
     },
     icon : {
         fontSize : "1.5rem",
@@ -82,14 +81,8 @@ export const Favorite = (props) => {
             onClick={addToFavorites}
             variant="outlined"  
             className={classes.button}>
-                <FavoriteIcon className={favorited ? `${classes.icon}` : `${classes.notFavorited}`} />
                 {favorited}
             </Button>
-            <Paper className={classes.favoritedBy} elevation={6}>
-                <Typography>
-                    Favorited by : {favNum} users
-                </Typography>
-            </Paper>
         </div>
     )
 }

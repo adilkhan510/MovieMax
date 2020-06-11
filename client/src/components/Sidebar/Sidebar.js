@@ -10,8 +10,11 @@ const useStyles = makeStyles(theme=>({
         display: "flex",
         flexDirection: "column",
         justifyContent : "flex-start",
-        maxWidth: "10rem",
-        padding: "2rem",
+        padding: "1rem 0rem",
+        alignItems : "baseline"
+    },
+    stickyBox : {
+        margin : "2rem"
     },
     menuItem : {
         color : "black",
@@ -40,11 +43,7 @@ const useStyles = makeStyles(theme=>({
         fontSize: "1rem",
         textTransform: "uppercase",
         letterSpacing: "-0.5px",
-        margin : "1rem",
         color : "grey"
-    },
-    browse : {
-        
     },
     insideContainer : {
         display: "flex",
@@ -57,7 +56,12 @@ const useStyles = makeStyles(theme=>({
         margin : '2rem 2rem 1rem 1rem',
     },
     hover : {
-        border : "1px solid red "
+        border : "1px solid red ",
+        borderRadius : "1rem",
+        padding : "0 1rem",
+        position : "relative",
+        left : "-20%", 
+        top : 0
     }
 }))
 
@@ -68,37 +72,36 @@ export const Sidebar = (props) => {
     const location = parseInt(window.location.pathname.split('/')[2])
 
     return (
-        <StickyBox>
+        <StickyBox className={classes.stickyBox}>
             <div>
-                <Paper className={classes.headerContainer}>
-                    <Typography className={classes.header}>
-                        Discover
-                    </Typography>
-                </Paper>
+                <Typography className={classes.header}>
+                    Discover
+                </Typography>
                 <div className={classes.root}>
                 <a href="/browse/popular" className={classes.href}>
                     <MenuItem
+                    disableGutters={true}
                     className={classes.menuItem}
                     >Popular</MenuItem>
                 </a>
                 <a href="/browse/trending" className={classes.href}>
                 <MenuItem
+                disableGutters={true}
                 className={classes.menuItem}                
                 >Trending</MenuItem>
                 </a>
                 <a href="/browse/upcoming" className={classes.href}>
                     <MenuItem
+                    disableGutters={true}
                     className={classes.menuItem}
                     >Upcoming</MenuItem>
                 </a>
                 </div>
             </div>
             <div>
-                <Paper className={classes.headerContainer}>
-                    <Typography className={classes.header}>
-                        Genres
-                    </Typography>
-                </Paper>
+                <Typography className={classes.header}>
+                    Genres
+                </Typography>
                 <div className={classes.root}>
                 {
                     genres &&

@@ -41,8 +41,8 @@ export const fetchMovieInfo = async (id) => {
     const endpoint = `${API_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`
     try{
         const movies = await Axios.get(endpoint);
-        console.log("1 made api call",movies)
-        return movies.data
+        const cast = await Axios.get(`${API_URL}/movie/${id}/credits?api_key=${API_KEY}`)
+        return [movies.data, cast] 
     }catch(err){
         console.log(err)
     }
