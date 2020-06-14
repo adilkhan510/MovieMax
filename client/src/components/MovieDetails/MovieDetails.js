@@ -9,7 +9,7 @@ import { fetchMovieInfo } from '../../actions/actions'
 import { MovieCard } from '../Home/MovieCard'
 import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../config'
 import Favorite from '../MovieDetail/utils/Favorite';
-
+import { SimilarMovies } from '../SimilarMovies/SimilarMovies'
 const useStyles = makeStyles(theme=>({
     main : {
         padding: "2rem",
@@ -18,16 +18,35 @@ const useStyles = makeStyles(theme=>({
         marginleft: "4rem",
         marginRight : "1rem",
     },
+    mainMovieInfo : {
+        display : "flex",
+        alignContent : "flex-start",
+        padding: "1rem",
+        alignItems : "center",
+        justifyContent : "center"
+    },
     imageContainer : {
-        width : '300px',
+        display : "flex",
+        flexDirection : "row",
+        alignItems : "center",
+        justifyContent : "center",
+        [theme.breakpoints.up('md')] : {
+        display : "flex",
+        flexDirection : "row",
+        alignItems : "center",
+        justifyContent : "center",
+        }
+    },
+    movieImg : {
+        maxWidth : "350px"
     },
     infoContainer : {
-        display : "flex",
-        flexDirection : "column",
-        justifyContent : "flex-start",
-        alignSelf : "baseline",
-        height : "500px",
-        maxWidth : "35rem"
+        [theme.breakpoints.up('md')] : {
+            display : "flex",
+            flexDirection : "column",
+            justifyContent : "center",
+            alignSelf : "baseline",
+        }
     },
     movieTitle : {
         position : "relative",
@@ -41,9 +60,6 @@ const useStyles = makeStyles(theme=>({
         letterSpacing: "-0.5px",
         color : "grey",
 
-    },
-    subContainer : {
-        marginLeft : "5rem"
     },
     rating : {
         margin : "2rem 0",
@@ -81,8 +97,8 @@ const useStyles = makeStyles(theme=>({
         margin : "1rem 0"
     },
     img : {
-        width : "5rem",
-        height : "5rem",
+        width : "70px",
+        height : "70px",
         margin : "0.5rem"
     },
     subMovieInfo : {
@@ -97,7 +113,12 @@ const useStyles = makeStyles(theme=>({
     },
     favoriteButton : {
         position : "relative",
-    }
+    },
+    similarMovie : {
+        position : "relative",
+        left : "0"
+    },
+
 }))
 
 export const MovieDetails = (props) => {
@@ -108,6 +129,7 @@ export const MovieDetails = (props) => {
     const [cast , setCast] = useState([]);
     const renderMovieInfo = async (id)=>{
         const [movies, cast ] = await fetchMovieInfo(id)
+        console.log(movies.genres[0].id)
         console.log(cast.data.cast);
         setCast(cast.data.cast);
         setMovieInfo(movies);
@@ -127,19 +149,18 @@ export const MovieDetails = (props) => {
             {
                 movieInfo && 
             <Grid item xs={12}
-                className={classes.subContainer}
             >
                 <Grid container
-                row
-                justify="space-evenly"
-                alignContent="flex-start"
+                className={classes.mainMovieInfo}
                 >
-                    <Grid item xs={12} md={6}>
+                    <Grid item sm={10} md={6} >
                         <div className={classes.imageContainer}>
+                            <div className={classes.movieImg}>
                             <MovieCard movieUrl={`${IMAGE_URL}/w500${movieInfo.poster_path}`} />
+                            </div>
                         </div>
                     </Grid>
-                    <Grid item xs={12} md={6}
+                    <Grid item sm={10} md={6}
                     className={classes.infoContainer}
                     >
                         <div className={classes.header}>
@@ -178,6 +199,13 @@ export const MovieDetails = (props) => {
                             </div>
                         </div>
                     </Grid>
+                </Grid>
+                    <Grid item className={classes.similarMovieContainer} xs={12}> 
+                    <Typography className={classes.typography}>Similar Movies</Typography>
+                {
+                    movieInfo.genres && 
+                    <SimilarMovies id={movieInfo.genres[0].id} />
+                }
                 </Grid>
             </Grid>
             }

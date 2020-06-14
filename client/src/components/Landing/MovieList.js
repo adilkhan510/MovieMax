@@ -14,8 +14,6 @@ const useStyles = makeStyles(theme=>({
         marginLeft : "auto",
         marginRight : "2rem",
     },
-    header : {
-    },
     cardInfo : {
         display : "flex",
         flexDirection : "column",
