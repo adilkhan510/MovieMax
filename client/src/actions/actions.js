@@ -19,6 +19,7 @@ export const fetchMoviesByGenre = async (genre, page) => {
     const endpoint = `${API_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genre}`
     try{
         const movies = await Axios.get(endpoint);
+        console.log(movies)
         return movies.data.results
     }catch(err){
         console.log(err)
@@ -37,17 +38,28 @@ export const fetchCasts = (movieId) => {
     })
 }
 
-export const fetchMovieInfo = async (id) => {
+export const fetchMovieInfo = async (id,page) => {
     const endpoint = `${API_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`
     try{
         const movies = await Axios.get(endpoint);
         const cast = await Axios.get(`${API_URL}/movie/${id}/credits?api_key=${API_KEY}`)
-        return [movies.data, cast] 
+        const recommended = await Axios.get(`${API_URL}/movie/${id}/recommendations?api_key=${API_KEY}&language=en-US&page=${page}`)
+        console.log(recommended)
+        return [movies.data, cast, recommended.data.results] 
     }catch(err){
         console.log(err)
     }
 }
 
+export const fetchDiscover = async(name,page)=>{
+    const endpoint = `${API_URL}/movie/${name}?api_key=${API_KEY}&language=en-US&${page}=1`;
+    try {
+        const movies = await Axios.get(endpoint);
+        return movies.data.results
+    }catch(err){
+        console.log(err)
+    }
+}
 // init function : Runs before the main App runs :
 
 export const init=()=>{

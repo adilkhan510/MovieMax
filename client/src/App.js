@@ -14,6 +14,7 @@ import { Sidebar } from './components/Sidebar/Sidebar';
 import { init } from './actions/actions'
 import {MovieDetails} from './components/MovieDetails/MovieDetails'
 import { MovieList } from './components/Landing/MovieList';
+import  MobileMenu  from './components/Mobile/MobileMenu'
 
 
 const useStyles= makeStyles((theme)=>({
@@ -22,7 +23,11 @@ const useStyles= makeStyles((theme)=>({
     direction : "row",
     justifyContent : "flex-start",
     height: "100%",
-    width: "100"
+    maxWidth: "100vw"
+  },
+  main : {
+    maxWidth : "93%",
+    marginTop : "1rem"
   }
 }))
 
@@ -40,15 +45,20 @@ function App() {
     <div className="App">
       <UserProvider>
         <ThemeProvider theme={theme}>
-          <NavBar />
           <div className={classes.mainContainer}>
+            <div className={classes.stickyBar}>
             {
-              isLoading ? <div>Loading....</div> : <Sidebar />
+              isLoading ? <div>Loading....</div> : <MobileMenu />
             }
+            </div>
+            <div className={classes.main}>
             <Switch>
               <Route exact path="/discover/:name" component={MovieList} />
               <Route exact path="/movie/:id" component={MovieDetails} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/" component={MovieList} />
             </Switch>
+            </div>
             </div>
         </ThemeProvider>
       </UserProvider>

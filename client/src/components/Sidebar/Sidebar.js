@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import StickyBox from 'react-sticky-box';
 import { makeStyles } from '@material-ui/styles';
-import { MenuItem, Typography, Paper } from '@material-ui/core';
+import { MenuItem, Typography, Paper, Drawer } from '@material-ui/core';
 import img from '../../Images/logo.png'
 
 
@@ -78,19 +78,19 @@ export const Sidebar = (props) => {
                     Discover
                 </Typography>
                 <div className={classes.root}>
-                <a href="/browse/popular" className={classes.href}>
+                <a href="/discover/popular" className={classes.href}>
                     <MenuItem
                     disableGutters={true}
                     className={classes.menuItem}
                     >Popular</MenuItem>
                 </a>
-                <a href="/browse/trending" className={classes.href}>
+                <a href="/discover/now_playing" className={classes.href}>
                 <MenuItem
                 disableGutters={true}
                 className={classes.menuItem}                
                 >Trending</MenuItem>
                 </a>
-                <a href="/browse/upcoming" className={classes.href}>
+                <a href="/discover/upcoming" className={classes.href}>
                     <MenuItem
                     disableGutters={true}
                     className={classes.menuItem}

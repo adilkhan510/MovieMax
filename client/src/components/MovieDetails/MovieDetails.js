@@ -12,48 +12,54 @@ import Favorite from '../MovieDetail/utils/Favorite';
 import { SimilarMovies } from '../SimilarMovies/SimilarMovies'
 const useStyles = makeStyles(theme=>({
     main : {
-        padding: "2rem",
-        marginTop: "2rem",
-        width : "100%",
+        padding: "1rem",
+        marginTop: "3rem",
+        width : "90%",
         marginleft: "4rem",
-        marginRight : "1rem",
+        [theme.breakpoints.up('sm')]: {
+            marginTop: "3rem",
+            width : "100%",
+            marginleft: "4rem",
+            marginRight : "1rem",
+        }
     },
     mainMovieInfo : {
         display : "flex",
         alignContent : "flex-start",
-        padding: "1rem",
-        alignItems : "center",
-        justifyContent : "center"
+        justifyContent : "center",
+        [theme.breakpoints.up('sm')] : {
+            width : "auto"
+        },
+        width : "20rem"
     },
     imageContainer : {
         display : "flex",
         flexDirection : "row",
-        alignItems : "center",
         justifyContent : "center",
-        [theme.breakpoints.up('md')] : {
-        display : "flex",
-        flexDirection : "row",
-        alignItems : "center",
-        justifyContent : "center",
-        }
+        minHeight : "500px"
     },
     movieImg : {
-        maxWidth : "350px"
+        maxWidth : "350px",
     },
     infoContainer : {
-        [theme.breakpoints.up('md')] : {
+        [theme.breakpoints.up('sm')] : {
             display : "flex",
             flexDirection : "column",
             justifyContent : "center",
             alignSelf : "baseline",
-        }
+            width : "auto"
+        },
+        width : "20rem"
     },
     movieTitle : {
+        [theme.breakpoints.up('md')] : {
+            fontSize : "2rem"
+        },
         position : "relative",
         left : "0",
         margin : "0rem auto 2rem 0",
         fontWeight: "200",
-        fontSize : "2rem"
+        fontSize : "1rem"
     },
     typography : {
         textTransform: "uppercase",
@@ -118,6 +124,24 @@ const useStyles = makeStyles(theme=>({
         position : "relative",
         left : "0"
     },
+    typography1 : {
+        [theme.breakpoints.up('md')] : {
+            fontSize : "1rem"
+        },
+        fontSize : "0.8rem"
+    },
+    similarMovieContainer : {
+        padding: "1rem",
+        marginTop: "3rem",
+        marginleft: "4rem",
+        [theme.breakpoints.up('sm')]: {
+            padding: "2rem",
+            marginTop: "2rem",
+            width : "100%",
+            marginleft: "4rem",
+            marginRight : "1rem",
+        }
+    }
 
 }))
 
@@ -125,14 +149,16 @@ export const MovieDetails = (props) => {
 
     const classes = useStyles()
     const movieId = props.match.params.id
-    const [ movieInfo, setMovieInfo ] = useState([])
+    const [ movieInfo, setMovieInfo ] = useState([]);
+    const [recommendations, setR] = useState([])
     const [cast , setCast] = useState([]);
-    const renderMovieInfo = async (id)=>{
-        const [movies, cast ] = await fetchMovieInfo(id)
+    const renderMovieInfo = async (id,page)=>{
+        const [movies, cast, recommended ] = await fetchMovieInfo(id,1)
         console.log(movies.genres[0].id)
         console.log(cast.data.cast);
         setCast(cast.data.cast);
         setMovieInfo(movies);
+        setR(recommended);
     }
 
     useEffect(()=>{
@@ -148,19 +174,19 @@ export const MovieDetails = (props) => {
         >
             {
                 movieInfo && 
-            <Grid item xs={12}
+            <Grid item xs={10} md={12}
             >
                 <Grid container
                 className={classes.mainMovieInfo}
                 >
-                    <Grid item sm={10} md={6} >
+                    <Grid item xs={10} md={6} >
                         <div className={classes.imageContainer}>
                             <div className={classes.movieImg}>
                             <MovieCard movieUrl={`${IMAGE_URL}/w500${movieInfo.poster_path}`} />
                             </div>
                         </div>
                     </Grid>
-                    <Grid item sm={10} md={6}
+                    <Grid item xs={10} md={6}
                     className={classes.infoContainer}
                     >
                         <div className={classes.header}>
@@ -169,9 +195,11 @@ export const MovieDetails = (props) => {
                             </Typography>
                             <Favorite className={classes.favoriteButton} movieId={movieId} movieInfo={movieInfo} movieImage={`${IMAGE_URL}/w500${movieInfo.poster_path}`} />
                         </div>
+                        <div>
                             <Typography className={classes.typography1}>
                             {movieInfo.overview}
                             </Typography>
+                        </div>
                         <div className={classes.subMovieInfo}>
                             <div className={classes.rating}>
                                 <Rating name="read-only" value={movieInfo.vote_average/2} readOnly />
@@ -200,11 +228,11 @@ export const MovieDetails = (props) => {
                         </div>
                     </Grid>
                 </Grid>
-                    <Grid item className={classes.similarMovieContainer} xs={12}> 
+                <Grid item className={classes.similarMovieContainer} xs={12}> 
                     <Typography className={classes.typography}>Similar Movies</Typography>
                 {
-                    movieInfo.genres && 
-                    <SimilarMovies id={movieInfo.genres[0].id} />
+                    recommendations && 
+                    <SimilarMovies data={recommendations} />
                 }
                 </Grid>
             </Grid>

@@ -16,13 +16,14 @@ const useStyles = makeStyles((theme)=>({
         position : "relative",
     },
     img : {
-        maxHeight : "400px",
-        maxWidth : "350px",
+        maxHeight : "500px",
+        minWidth : "300px",
         marginBottom : "2rem"
     }
 }))
 
 export const SimilarMovies = ( props ) => {
+    const data = props.data
     const classes = useStyles()
     const [movies, setMovies] = useState([])
 
@@ -42,8 +43,8 @@ export const SimilarMovies = ( props ) => {
         justify = "space-evenly"
         >
             {
-                movies && movies.map((m,index)=>(
-                    <Grid item xs={12} sm={6} md={3}>
+                data && data.map((m,index)=>(
+                    <Grid item xs={12} sm={8} md={4}>
                         <div className={classes.img}>
                             <MovieCard movieUrl={`${IMAGE_URL}/w500${m.poster_path}`} id={m.id} />
                         </div>
