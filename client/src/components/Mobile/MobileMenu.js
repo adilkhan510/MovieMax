@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -6,17 +6,13 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import {Typography, MenuItem, Tabs, Tab} from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../Context/userContext'
 
 const drawerWidth = 150;
 
@@ -75,7 +71,7 @@ links : {
     padding: "0rem 1rem",
 },
 header : {
-    fontWeight: "400",
+    fontWeight: "800",
     fontSize: "1rem",
     textTransform: "uppercase",
     letterSpacing: "-0.5px",
@@ -109,6 +105,7 @@ menuDirectory : {
 
 function MobileMenu(props) {
 //   const { window } = props;
+  const { currentUser } = useContext(UserContext);
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -192,10 +189,20 @@ function MobileMenu(props) {
             Movie Max
           </Typography>
           <div className={classes.menuDirectory}>
-            <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
+            {
+              currentUser ? (
+                  <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
                   <Tab value={0} label="Home" component={Link} to="/" style={{color : "white"}} />
-                  <Tab value={1} label="Login" component={Link} to="/login" style={{color : "white"}} />
-              </Tabs>
+                  <Tab value={1} label="Favorites" component={Link} to="/login" style={{color : "white"}} />
+                  </Tabs>
+                ) :
+                (
+                <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
+                <Tab value={0} label="Home" component={Link} to="/" style={{color : "white"}} />
+                <Tab value={1} label="Login" component={Link} to="/login" style={{color : "white"}} />
+                </Tabs>
+                )
+              }
           </div>
         </Toolbar>
       </AppBar>

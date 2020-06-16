@@ -19,7 +19,7 @@ const NavBar = ( props ) => {
         if(window.location.pathname === "/profile" && value !== 1){
             setValue(1)
         }
-    })
+    },[])
 
     if(currentUser){
         return(
