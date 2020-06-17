@@ -1,5 +1,5 @@
-import React, {useState, useContext} from 'react';
-import PropTypes from 'prop-types';
+import React, {useState, useContext, useEffect} from 'react';
+import { useHistory } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
-import {Typography, MenuItem, Tabs, Tab} from '@material-ui/core';
+import {Typography, MenuItem, Tabs, Tab, Button} from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../Context/userContext'
@@ -105,12 +105,13 @@ menuDirectory : {
 
 function MobileMenu(props) {
 //   const { window } = props;
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext)
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory()
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const location = parseInt(window.location.pathname.split('/')[2])
-
+  console.log(currentUser)
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -120,6 +121,20 @@ function MobileMenu(props) {
 
   const genres = JSON.parse(localStorage.getItem('genres'));
   const [id, setId] = useState(localStorage.getItem('gId') || 28);
+  const handleLogout =()=>{
+    setCurrentUser('');
+    localStorage.setItem('user','')
+    history.push('/discover/popular')
+  }
+
+  useEffect(()=>{
+    if(window.location.pathname === "/discover/popular" && value !== 0){
+        setValue(0)
+    }
+    if(window.location.pathname === "/favorites" && value !== 1){
+        setValue(1)
+    }
+},[])
 
   const drawer = (
     <div>
@@ -169,7 +184,6 @@ function MobileMenu(props) {
     </div>
   );
 
-//   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div className={classes.root}>
@@ -192,8 +206,9 @@ function MobileMenu(props) {
             {
               currentUser ? (
                   <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
-                  <Tab value={0} label="Home" component={Link} to="/" style={{color : "white"}} />
-                  <Tab value={1} label="Favorites" component={Link} to="/login" style={{color : "white"}} />
+                  <Tab value={0} label="Home" component={Link} to="/discover/popular" style={{color : "white"}} />
+                  <Tab value={1} label="Favorites" component={Link} to="/favorites" style={{color : "white"}} />
+                  <Tab onClick={handleLogout} label="Logout" />
                   </Tabs>
                 ) :
                 (
@@ -239,12 +254,5 @@ function MobileMenu(props) {
   );
 }
 
-MobileMenu.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 export default MobileMenu;

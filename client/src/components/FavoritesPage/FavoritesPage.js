@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/styles'
 import styles from '../../styles/favorites'
 import {MovieCard} from '../Home/MovieCard'
 import axios from 'axios';
+import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../config'
+
 
 
 const FavoritesPage = ( props ) => {
@@ -31,38 +33,24 @@ const FavoritesPage = ( props ) => {
     },[])
 
     return (
-        <>
-        <div className={classes.textContainer}>
-            <Paper className={classes.text1} elevation={5}>
-                <Typography variant="body1" className={classes.typography}>
-                    My Favorite Movies
-                </Typography>
-            </Paper>
+        <Paper className={classes.root}>
+        <div className={classes.header}>
         </div>
-            <Grid container 
-            justify="center"
-            alignItems="center"
-            direction="row"
-            spacing ={2}
-            className = {classes.container}>
+            <Grid container spacing={2}>
+
                 {
                     movieList && movieList.map((m,index)=>(
-                        <Grid item xs={6} md={3} key={index}>
-                            <Paper elevation={10}>
-                                <MovieCard key={index} style={{width:"30%"}}
-                                    movieUrl={m.movieImage}
-                                    id={m.movieId}
-                                />
-                                <Paper className={classes.text}>
-                                    {m.movieTitle}
-                                </Paper>
-                        </Paper>
+                        <Grid item xs={12} sm={6} md={3}  >
+                            <MovieCard movieUrl={m.movieImage} id={m.movieId} />
+                            <div className={classes.cardInfo}>
+                                <div>{m.title}</div>
+                                <div>{m.rating}</div>
+                            </div>
                         </Grid>
                     ))
                 }
-
             </Grid>
-        </>
+        </Paper>
     )
 }
 

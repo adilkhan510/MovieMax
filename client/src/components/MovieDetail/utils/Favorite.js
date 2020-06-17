@@ -81,7 +81,7 @@ export const Favorite = (props) => {
             onClick={addToFavorites}
             variant="outlined"  
             className={classes.button}>
-                {favorited}
+                {favorited} : {favNum}
             </Button>
         </div>
     )

@@ -25,11 +25,12 @@ const Login = ( props ) => {
                 'Content-Type': 'application/json; charset=UTF-8'
             }
             }).then(res=>{
+                setCurrentUser(user)
                 localStorage.setItem('user', JSON.stringify(res.data))
             }).catch(err=>{
                 console.log(err)
         })
-        history.push('/')
+        history.push('/discover/popular')
     }
     const handleDummyAccount = async (event)=>{
         event.preventDefault();

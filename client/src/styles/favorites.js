@@ -24,7 +24,14 @@ const styles = (theme)=>({
         width : "70vw",
         height : "70vh",
         margin : "0 15%"
-    }
+    },
+    root : {
+        padding: "2rem",
+        marginTop: "2rem",
+        width : "100%",
+        marginLeft : "auto",
+        marginRight : "2rem",
+    },
 })
 
 export default styles

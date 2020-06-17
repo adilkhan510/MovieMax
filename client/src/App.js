@@ -57,6 +57,7 @@ function App() {
               <Route exact path="/movie/:id" component={MovieDetails} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/" component={MovieList} />
+              <Route exact path="/favorites" component={FavoritesPage} />
             </Switch>
             </div>
             </div>
