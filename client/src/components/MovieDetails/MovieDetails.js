@@ -147,7 +147,8 @@ const useStyles = makeStyles(theme=>({
 
 export const MovieDetails = (props) => {
 
-    const classes = useStyles()
+    const classes = useStyles();
+    const user = localStorage.getItem('user');
     const movieId = props.match.params.id
     const [ movieInfo, setMovieInfo ] = useState([]);
     const [recommendations, setR] = useState([])
@@ -193,7 +194,9 @@ export const MovieDetails = (props) => {
                             <Typography className={`${classes.typography} ${classes.movieTitle}`}>
                                 {movieInfo.title}
                             </Typography>
-                            <Favorite className={classes.favoriteButton} movieId={movieId} movieInfo={movieInfo} movieImage={`${IMAGE_URL}/w500${movieInfo.poster_path}`} />
+                            {
+                                user ? (<Favorite className={classes.favoriteButton} movieId={movieId} movieInfo={movieInfo} movieImage={`${IMAGE_URL}/w500${movieInfo.poster_path}`} />) : null
+                            }
                         </div>
                         <div>
                             <Typography className={classes.typography1}>

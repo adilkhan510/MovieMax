@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import theme from "./styles/muiTheme"
@@ -56,7 +56,9 @@ function App() {
               <Route exact path="/discover/:name" component={MovieList} />
               <Route exact path="/movie/:id" component={MovieDetails} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/" component={MovieList} />
+              <Route exact path="/">
+                <Redirect to="/discover/popular" />
+              </Route>
               <Route exact path="/favorites" component={FavoritesPage} />
             </Switch>
             </div>
