@@ -77,7 +77,7 @@ export const MovieList = ( props ) => {
 
                     {
                         movies && movies.map((m,index)=>(
-                            <Grid item xs={12} sm={6} md={4}  >
+                            <Grid item xs={12} sm={6} md={4} lg={3}  >
                                 <MovieCard movieUrl={`${IMAGE_URL}/w500${m.poster_path}`} id={m.id} />
                                 <div className={classes.cardInfo}>
                                     <div>{m.title}</div>
