@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const config = require('./config/key')
 const routes = require('./routes/api')
+const path = require('path')
 require('dotenv').config()
 
 const corsOptions = {
