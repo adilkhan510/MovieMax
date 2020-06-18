@@ -16,6 +16,7 @@ export const fetchGenres= ()=> {
 // Get movies
 export const fetchMoviesByGenre = async (genre, page) => { 
     console.log(genre)
+    console.log(API_URL)
     const endpoint = `${API_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genre}`
     try{
         const movies = await Axios.get(endpoint);
