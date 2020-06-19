@@ -39,9 +39,10 @@ const login = async (req,res)=>{
     try{
         const { email, password } = req.body;
         console.log(req.body)
-        console.log(email, password)
+        console.log("req came in....",email, password)
         const existingUser = await db.User.findOne({email : email});
         if(!existingUser){
+            console.log("user does not exist...")
             return res.status(400).json({
                 error : "Invalid email or Password"
             })
@@ -54,6 +55,7 @@ const login = async (req,res)=>{
         }
         // Send back the token to the frontend. We will use this to verify the user whenever making requests from the frontend
         const token = jwt.sign({id : existingUser._id},process.env.JWT_TOKEN)
+        console.log("creating token....", token)
         return res.status(201).json({
             token,
             email : existingUser.email,
