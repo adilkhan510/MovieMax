@@ -56,7 +56,7 @@ const login = async (req,res)=>{
             })
         }
         // Send back the token to the frontend. We will use this to verify the user whenever making requests from the frontend
-        const token = jwt.sign({id : existingUser._id},process.env.JWT_TOKEN)
+        const token = await jwt.sign({id : existingUser._id},process.env.JWT_TOKEN)
         console.log("creating token....", token)
         return res.status(201).json({
             token,
@@ -67,7 +67,7 @@ const login = async (req,res)=>{
     } catch(err){
         return res.status(400).json({
             error: "Something went wrong while logging in.",
-            err
+            err : err
         })
     }
 }
