@@ -17,13 +17,16 @@ export const fetchGenres= ()=> {
 export const fetchMoviesByGenre = async (genre, page) => { 
     console.log(genre)
     const endpoint = `${API_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genre}`
-    try{
-        const movies = await Axios.get(endpoint);
-        console.log(movies)
-        return movies.data.results
-    }catch(err){
+    const movies = await fetch(endpoint)
+    .then(res=>res.json())
+    .then(res=>{
+        console.log(res)
+        return res.results
+    })
+    .catch(err=>{
         console.log(err)
-    }
+    })
+    return movies
 }
 
 // Get the list of casts members
