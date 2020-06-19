@@ -44,7 +44,7 @@ export const SimilarMovies = ( props ) => {
         >
             {
                 data && data.map((m,index)=>(
-                    <Grid item xs={12} sm={8} md={4}>
+                    <Grid item xs={12} sm={8} md={4} lg={3}>
                         <div className={classes.img}>
                             <MovieCard movieUrl={`${IMAGE_URL}/w500${m.poster_path}`} id={m.id} />
                         </div>

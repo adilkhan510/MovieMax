@@ -20,7 +20,7 @@ const Login = ( props ) => {
             email : email,
             password : password
         }
-        axios.post(`${process.env.PORT}/api/users/login`, JSON.stringify(user), {
+        axios.post(`/api/users/login`, JSON.stringify(user), {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
             }
