@@ -16,7 +16,7 @@ const FavoritesPage = ( props ) => {
 
 
     useEffect(()=>{
-        axios.post('http://localhost:5000/api/movies/getusersfavorites',user, {
+        axios.post('/api/movies/getusersfavorites',user, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 token : user.token
