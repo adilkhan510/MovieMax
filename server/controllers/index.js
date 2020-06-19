@@ -66,7 +66,8 @@ const login = async (req,res)=>{
         })
     } catch(err){
         return res.status(400).json({
-            error: "Something went wrong while logging in."
+            error: "Something went wrong while logging in.",
+            err
         })
     }
 }
