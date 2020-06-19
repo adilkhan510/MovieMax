@@ -41,7 +41,7 @@ export const MovieList = ( props ) => {
 
     const id = props.match.params.name;
     const [page,setPage] = useState(2)
-    const [movies, setMovies] = useState([])
+    const [movies, setMovies] = useState(null)
     useEffect(()=>{
         renderMovies(id,page)
     },[id,page])
@@ -69,6 +69,7 @@ export const MovieList = ( props ) => {
         setMovies(movies)
         }
     }
+    if(movies){
     return (
         <Paper className={classes.root}>
             <div className={classes.header}>
@@ -102,5 +103,8 @@ export const MovieList = ( props ) => {
                 </div>
         </Paper>
     )
+}else{
+    return <div>Loading</div>
+}
 }
 
