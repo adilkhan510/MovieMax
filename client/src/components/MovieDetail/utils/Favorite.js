@@ -54,7 +54,7 @@ export const Favorite = (props) => {
 
     const addToFavorites=(e)=>{
         e.preventDefault();
-        axios.post('http://localhost:5000/api/movies/togglefavorites', details, {
+        axios.post('/api/movies/togglefavorites', details, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 token : userInfo.token

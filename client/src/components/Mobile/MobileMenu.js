@@ -61,7 +61,6 @@ menuItem : {
     fontSize: "0.5rem",
     textTransform: "uppercase",
     letterSpacing: "-0.5px",
-    minHeight : "auto",
     [theme.breakpoints.up('md')] : {
       fontSize : "0.8rem",
       minHeight : 'auto',
@@ -224,7 +223,7 @@ function MobileMenu(props) {
               currentUser ? (
                   <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
                   <Tab value={1} className={classes.typography} label="Favorites" component={Link} to="/favorites" style={{color : "black"}} />
-                  <Tab onClick={handleLogout} className={classes.typography} label="Logout" />
+                  <Tab onClick={handleLogout} className={classes.typography} label="Logout" style={{color : "black"}} />
                   </Tabs>
                 ) :
                 (

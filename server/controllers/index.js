@@ -27,6 +27,7 @@ const register = async (req,res)=>{
         db.User.create(user,(err,userData)=>{
             if(err) console.log(err);
             res.status(200).json({
+                success : true,
                 data : userData
             })
         })
@@ -117,29 +118,48 @@ const addToFavorites = async (req,res)=>{
             movieTitle : req.body.movieTitle,
             movieImage : req.body.movieImage
         }
-        console.log("user....",user)
-        db2.Favorites.findOne({user : req.user, movieId : req.body.movieId},(err,foundDoc)=>{
-            if(foundDoc){
-                db2.Favorites.deleteOne(user,(err,deletedUser)=>{
-                    if(err) return res.status(400).json({
-                        err
-                    })
-                    res.status(200).json({
-                        deleted : true,
-                    })
-                })
-            }else{
-                db2.Favorites.create(user,(err,favoritedMovie)=>{
-                    if(err) return res.status(400).json({
-                        err
-                    })
-                    res.status(200).json({
-                        success: true,
-                        data : favoritedMovie
-                    })
+        console.log("user....",req.user)
+        const foundDoc = await db2.Favorites.findOne({user : req.user, movieId : req.body.movieId})
+        console.log(foundDoc, "........document deleted")
+        if(!foundDoc){
+            console.log("cant find the document so creating it")
+            db2.Favorites.create(user);
+            return res.status(200).json({
+                success : true,
+                data : user
             })
-            }
-        });
+        }else{
+            const deleted_doc = await db2.Favorites.findByIdAndDelete(foundDoc._id);
+            console.log("what i deleted....", deleted_doc )
+            return res.status(200).json({
+                deleted : true,
+                data : deleted_doc
+            })
+        }
+        // (err,foundDoc)=>{
+        //     console.log("found doc", foundDoc)
+        //     if(foundDoc){
+        //         db2.Favorites.deleteOne(user,(err,deletedUser)=>{
+        //             if(err) return res.status(400).json({
+        //                 err
+        //             })
+        //             return res.status(200).json({
+        //                 deleted : true,
+        //             })
+        //         })
+        //     }else{
+        //         console.log("adding to favorites")
+        //         db2.Favorites.create(user,(err,favoritedMovie)=>{
+        //             if(err) return res.status(400).json({
+        //                 err
+        //             })
+        //             res.status(200).json({
+        //                 success: true,
+        //                 data : favoritedMovie
+        //             })
+        //     })
+        //     }
+        // });
     }catch(err){
         return res.status(400).json({
             error: "Something went wrong."

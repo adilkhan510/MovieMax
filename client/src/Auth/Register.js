@@ -1,8 +1,10 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik';
-import { TextField, Button, Typography } from '@material-ui/core'
+import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles';
 import { object, string } from 'yup'
+import Axios from 'axios'
 
 import styles from '../styles/register';
 
@@ -10,14 +12,15 @@ import styles from '../styles/register';
 
 const Register = ( props ) => {
     const { classes } = props
+    const history = useHistory()
     const initialValues= { 
                 email: '', 
                 password: '',
                 Name : ''
-            }
-
+        }
     return(
         <div className={classes.root}>
+            <Paper className={classes.paper}>
             <Typography className={classes.header}>Register</Typography>
             <Formik
             initialValues={initialValues}
@@ -29,6 +32,19 @@ const Register = ( props ) => {
                 })
             }
             onSubmit={(values, { setSubmitting }) => {
+                Axios.post("/api/users/register",JSON.stringify(values),{
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                })
+                .then(res=>{
+                    if(res.data.success){
+                        history.push('/login');
+                    }
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
                 setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
                 setSubmitting(false);
@@ -79,10 +95,10 @@ const Register = ( props ) => {
                 <Button type="submit" disabled={isSubmitting} variant="contained">
                     Submit
                 </Button>
-                <pre>{JSON.stringify(values,null,4)}</pre>
                 </Form>
             )}
             </Formik>
+            </Paper>
         </div>
   )
 };

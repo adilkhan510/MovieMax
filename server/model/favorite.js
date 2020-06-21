@@ -3,14 +3,15 @@ const Schema = mongoose.Schema;
 const favoritesSchema = new Schema({
     user : {
         type : Schema.Types.ObjectId,
-        ref : "User"
+        ref : "User",
+        required : true
     },
     movieTitle : {
         type : String,
-
     },
     movieId : {
-        type : String
+        type : String,
+        required : true
     },
     movieImage : {
         type : String
