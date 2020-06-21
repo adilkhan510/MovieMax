@@ -92,7 +92,7 @@ const Register = ( props ) => {
                     label="Password "
                 />
                 {errors.password && touched.password && errors.password}
-                <Button type="submit" disabled={isSubmitting} variant="contained">
+                <Button type="submit" disabled={isSubmitting} variant="contained" color="primary">
                     Submit
                 </Button>
                 </Form>

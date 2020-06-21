@@ -5,13 +5,13 @@ export const MovieCard = (props) => {
     if(props.actorUrl){
         return(
                 <Paper style={{width:"100%", height : "100%"}} >
-                    <img src={props.actorUrl} style={{width:"100%",height:"390px"}} />
+                    <img src={props.actorUrl} style={{width:"100%",height:"390px"}} alt="actors"/>
                 </Paper>
         )
     }else{
     return (
         <a href={`/movie/${props.id}`}>
-                <img src={props.movieUrl} style={{width:"100%",height:"400px"}} />
+                <img src={props.movieUrl} style={{width:"100%",height:"400px"}} alt="movie" />
         </a>
     )
     }

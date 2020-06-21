@@ -22,10 +22,12 @@ const styles = ((theme)=>({
     },
     items : {
         margin : "1rem 0",
+        ...theme.typography,
+        color : "white"
     },
     paper : {
         width : "20em",
-        height : "25em",
+        height : "28em",
         display : "flex",
         justifyContent : "center",
         alignItems : "center",
@@ -36,7 +38,7 @@ const styles = ((theme)=>({
         alignSelf : "center",
         [theme.breakpoints.up('sm')]: {
             width : "25em",
-            height : "30em",
+            height : "33em",
         }
     }
 }))

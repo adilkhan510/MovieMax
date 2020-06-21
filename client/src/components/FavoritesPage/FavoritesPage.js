@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Grid, Paper, Typography} from '@material-ui/core'
+import {Grid, Paper} from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 import styles from '../../styles/favorites'
 import {MovieCard} from '../Home/MovieCard'
@@ -11,7 +11,6 @@ import Rating from '@material-ui/lab/Rating';
 const FavoritesPage = ( props ) => {
     const { classes } = props
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user.token)
     const [movieList, setMovieList] = useState(null);
 
 
@@ -23,7 +22,6 @@ const FavoritesPage = ( props ) => {
             }
         })
         .then(res=>{
-            console.log(res)
             setMovieList(res.data.movieList);
 
         })
@@ -32,7 +30,8 @@ const FavoritesPage = ( props ) => {
         })
     },[])
 
-    return (
+        if(movieList){
+        return(
         <Paper className={classes.root}>
         <div className={classes.header}>
         </div>
@@ -40,7 +39,7 @@ const FavoritesPage = ( props ) => {
 
                 {
                     movieList && movieList.map((m,index)=>(
-                        <Grid item xs={12} sm={6} md={3}  >
+                        <Grid item xs={10} sm={6} md={4} lg={3} key={m.movieId} >
                             <MovieCard movieUrl={m.movieImage} id={m.movieId} />
                             <div className={classes.cardInfo}>
                                 <div>{m.title}</div>
@@ -51,7 +50,10 @@ const FavoritesPage = ( props ) => {
                 }
             </Grid>
         </Paper>
-    )
+    )}
+    else{
+        return <div></div>
+    }
 }
 
 export default withStyles(styles)(FavoritesPage)

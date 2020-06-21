@@ -102,8 +102,10 @@ hover : {
     top : 0
 },
 typography : {
-    textTransform: "uppercase",
-    letterSpacing: "-0.5px",
+    textTransform: "none",
+    letterSpacing: "0.5px",
+    fontWeight : "400",
+    color : "grey",
     fontSize : "0.8rem",
     [theme.breakpoints.up('md')] : {
       fontSize : "1rem"
@@ -115,14 +117,12 @@ menuDirectory : {
 }));
 
 function MobileMenu(props) {
-//   const { window } = props;
   const { currentUser, setCurrentUser } = useContext(UserContext)
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory()
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const location = parseInt(window.location.pathname.split('/')[2])
-  console.log(currentUser)
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -131,21 +131,12 @@ function MobileMenu(props) {
       setValue(value)}
 
   const genres = JSON.parse(localStorage.getItem('genres'));
-  const [id, setId] = useState(localStorage.getItem('gId') || 28);
   const handleLogout =()=>{
     setCurrentUser('');
     localStorage.setItem('user','')
     history.push('/discover/popular')
   }
 
-  useEffect(()=>{
-    if(window.location.pathname === "/discover/popular" && value !== 0){
-        setValue(0)
-    }
-    if(window.location.pathname === "/favorites" && value !== 1){
-        setValue(1)
-    }
-},[])
 
   const drawer = (
     <div>
@@ -161,7 +152,7 @@ function MobileMenu(props) {
                 disableGutters={true}
                 className={classes.menuItem}
                 >
-                  <i class="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+                  <i className="fas fa-star" style={{marginRight : "0.2rem"}}></i>
                   Popular</MenuItem>
             </a>
             <a href="/discover/now_playing" className={classes.href}>
@@ -169,7 +160,7 @@ function MobileMenu(props) {
             disableGutters={true}
             className={classes.menuItem}                
             >
-              <i class="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+              <i className="fas fa-star" style={{marginRight : "0.2rem"}}></i>
               Trending</MenuItem>
             </a>
             <a href="/discover/upcoming" className={classes.href}>
@@ -177,7 +168,7 @@ function MobileMenu(props) {
                 disableGutters={true}
                 className={classes.menuItem}
                 >
-                  <i class="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+                  <i className="fas fa-star" style={{marginRight : "0.2rem"}}></i>
                   Upcoming</MenuItem>
             </a>
             </div>
@@ -187,13 +178,13 @@ function MobileMenu(props) {
       <List className={classes.links}>
         <Typography className={classes.header}>Genres</Typography>
         {genres && genres.map((g, index) => (
-            <a href={`/discover/${g.id}`} className={classes.href}>
+            <a href={`/discover/${g.id}`} className={classes.href} key={g.id}>
             <MenuItem
             // Check to see if the location is the same as the category. If so highlight it.
             className={location === g.id ? `${classes.menuItem} ${classes.hover}` : `${classes.menuItem}`}
             disableGutters={true}
             key={g.id}>
-            <i class="fas fa-video" style={{marginRight : "0.2rem"}}></i>
+            <i className="fas fa-video" style={{marginRight : "0.2rem"}}></i>
             {g.name}
             </MenuItem>
         </a>
@@ -209,7 +200,6 @@ function MobileMenu(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
-            color="black"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -221,14 +211,17 @@ function MobileMenu(props) {
           <div className={classes.menuDirectory}>
             {
               currentUser ? (
-                  <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
-                  <Tab value={1} className={classes.typography} label="Favorites" component={Link} to="/favorites" style={{color : "black"}} />
-                  <Tab onClick={handleLogout} className={classes.typography} label="Logout" style={{color : "black"}} />
-                  </Tabs>
+                  <div className={classes.tabsContainer} onChange={handleChange}>
+                  <Button className={classes.typography} onClick={()=>{history.push('/favorites')}}>
+                    Favorites
+                  </Button>
+                  {/* <Tab className={classes.typography} label="Favorites" component={Link} to="/favorites" style={{color : "black"}} /> */}
+                  <Button onClick={handleLogout} className={classes.typography}>Logout</Button>
+                  </div>
                 ) :
                 (
                 <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
-                <Tab value={1} label="Login" component={Link} to="/login" style={{color : "black"}} />
+                <Tab value={0} label="Login" component={Link} to="/login" style={{color : "black"}} />
                 </Tabs>
                 )
               }

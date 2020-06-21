@@ -10,9 +10,12 @@ const useStyles = makeStyles(theme=>({
     root : {
         padding: "2rem",
         marginTop: "2rem",
-        width : "100%",
+        width : "100vw",
         marginLeft : "auto",
         marginRight : "2rem",
+        [theme.breakpoints.up('sm')] : {
+            width : "100%"
+        }
     },
     cardInfo : {
         display : "flex",
@@ -78,7 +81,7 @@ export const MovieList = ( props ) => {
 
                     {
                         movies && movies.map((m,index)=>(
-                            <Grid item xs={11} sm={6} md={4} lg={3}  >
+                            <Grid item xs={11} sm={6} md={4} lg={3} key={m.id}  >
                                 <MovieCard movieUrl={`${IMAGE_URL}/w500${m.poster_path}`} id={m.id} />
                                 <div className={classes.cardInfo}>
                                     <div>{m.title}</div>

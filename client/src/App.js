@@ -6,7 +6,6 @@ import theme from "./styles/muiTheme"
 import Login from './Auth/Login';
 import UserProvider from './Context/userContext'
 import FavoritesPage from './components/FavoritesPage/FavoritesPage'
-import { Sidebar } from './components/Sidebar/Sidebar';
 import { init } from './actions/actions'
 import { MovieDetails } from './components/MovieDetails/MovieDetails'
 import { MovieList } from './components/Landing/MovieList';

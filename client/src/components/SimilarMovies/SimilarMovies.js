@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Grid, Paper } from '@material-ui/core'
+import React from 'react'
+import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { fetchMoviesByGenre } from '../../actions/actions'
-import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../config'
+import { IMAGE_URL } from '../../config'
 import {MovieCard} from '../Home/MovieCard'
 
 
@@ -25,17 +24,6 @@ const useStyles = makeStyles((theme)=>({
 export const SimilarMovies = ( props ) => {
     const data = props.data
     const classes = useStyles()
-    const [movies, setMovies] = useState([])
-
-    const renderMovies = async (id, page)=>{
-        console.log("id.....", id)
-        const res = await fetchMoviesByGenre(id, page)
-        setMovies(res)
-    }
-    useEffect(() => {
-        renderMovies(props.id, 1);
-
-    }, [])
     return (
         <Grid container
         direction = "row"
@@ -44,7 +32,7 @@ export const SimilarMovies = ( props ) => {
         >
             {
                 data && data.map((m,index)=>(
-                    <Grid item xs={12} sm={8} md={4} lg={3}>
+                    <Grid item xs={12} sm={8} md={4} lg={3} key={m.id}>
                         <div className={classes.img}>
                             <MovieCard movieUrl={`${IMAGE_URL}/w500${m.poster_path}`} id={m.id} />
                         </div>

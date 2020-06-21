@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Rating from '@material-ui/lab/Rating';
-import { Grid, Paper, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import Avatar from '@material-ui/core/Avatar';
 
 import { fetchMovieInfo } from '../../actions/actions'
 import { MovieCard } from '../Home/MovieCard'
-import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../config'
+import { IMAGE_URL } from '../../config'
 import Favorite from '../MovieDetail/utils/Favorite';
 import { SimilarMovies } from '../SimilarMovies/SimilarMovies'
 const useStyles = makeStyles(theme=>({
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme=>({
         [theme.breakpoints.up('sm')] : {
             width : "auto"
         },
-        width : "20rem"
+        width : "21rem"
     },
     imageContainer : {
         display : "flex",
@@ -154,8 +154,6 @@ export const MovieDetails = (props) => {
     const [cast , setCast] = useState([]);
     const renderMovieInfo = async (id,page)=>{
         const [movies, cast, recommended ] = await fetchMovieInfo(id,1)
-        console.log(movies.genres[0].id)
-        console.log(cast.data.cast);
         setCast(cast.data.cast);
         setMovieInfo(movies);
         setR(recommended);
@@ -223,7 +221,7 @@ export const MovieDetails = (props) => {
                                 {
                                     cast && cast.map((c,index)=>(
                                             c.profile_path &&
-                                            <Avatar 
+                                            <Avatar key={c.id}
                                             className={classes.img}
                                             src={c.profile_path && `${IMAGE_URL}/w500${c.profile_path}` } />
                                     ))
@@ -236,7 +234,7 @@ export const MovieDetails = (props) => {
                     <Typography className={classes.typography}>Similar Movies</Typography>
                 {
                     recommendations && 
-                    <SimilarMovies data={recommendations} />
+                    <SimilarMovies data={recommendations} key="2" />
                 }
                 </Grid>
             </Grid>

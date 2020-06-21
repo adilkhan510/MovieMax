@@ -1,7 +1,6 @@
 // Move All the functions here....
-import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../config'
+import { API_URL, API_KEY } from '../config'
 import Axios from 'axios'
-import { useState } from 'react'
 
 // Function that makes an API call to get back a list of genres.
 export const fetchGenres= ()=> {
@@ -15,12 +14,10 @@ export const fetchGenres= ()=> {
 
 // Get movies
 export const fetchMoviesByGenre = async (genre, page) => { 
-    console.log(genre)
     const endpoint = `${API_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genre}`
     const movies = await fetch(endpoint)
     .then(res=>res.json())
     .then(res=>{
-        console.log(res)
         return res.results
     })
     .catch(err=>{
@@ -47,7 +44,6 @@ export const fetchMovieInfo = async (id,page) => {
         const movies = await Axios.get(endpoint);
         const cast = await Axios.get(`${API_URL}/movie/${id}/credits?api_key=${API_KEY}`)
         const recommended = await Axios.get(`${API_URL}/movie/${id}/recommendations?api_key=${API_KEY}&language=en-US&page=${page}`)
-        console.log(recommended)
         return [movies.data, cast, recommended.data.results] 
     }catch(err){
         console.log(err)

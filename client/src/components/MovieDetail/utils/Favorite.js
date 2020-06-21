@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Paper, Typography } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../../config'
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme)=>({
     button: {
-        fontSize : "1rem",
+        fontSize : "0.5rem",
         width : "100%",
-        ...theme.typography
+        [theme.breakpoints.up('sm')]:{
+            fontSize : "1rem",
+        },
+        ...theme.typography,
     },
     icon : {
         fontSize : "1.5rem",
         color : "red",
     },
     notFavorited : {
-        fontSize : "1.5rem",
-        color : "black",
+        fontSize : "0.7rem",
+        color : "grey",
     },
     favoritedBy : {
         padding : "0.5rem",
@@ -38,13 +39,12 @@ export const Favorite = (props) => {
         movieImage : movieImage,
     }
     useEffect(()=>{
-        axios.post('http://localhost:5000/api/movies/favorites', details, {
+        axios.post('/api/movies/favorites', details, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
         }
         })
         .then(response => { 
-            console.log(response.data.length)
             setFavNum(response.data.length)
         })
         .catch(error => {
@@ -81,7 +81,9 @@ export const Favorite = (props) => {
             onClick={addToFavorites}
             variant="outlined"  
             className={classes.button}>
+                <Typography className={classes.notFavorited}>
                 {favorited} : {favNum}
+                </Typography>
             </Button>
         </div>
     )
