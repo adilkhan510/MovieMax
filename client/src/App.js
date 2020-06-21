@@ -5,13 +5,13 @@ import { makeStyles } from '@material-ui/styles'
 import theme from "./styles/muiTheme"
 import Login from './Auth/Login';
 import UserProvider from './Context/userContext'
-import  MovieDetail from './components/MovieDetail/MovieDetail'
 import FavoritesPage from './components/FavoritesPage/FavoritesPage'
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { init } from './actions/actions'
 import { MovieDetails } from './components/MovieDetails/MovieDetails'
 import { MovieList } from './components/Landing/MovieList';
 import  MobileMenu  from './components/Mobile/MobileMenu'
+import Register from './Auth/Register'
 
 
 const useStyles= makeStyles((theme)=>({
@@ -53,6 +53,7 @@ function App() {
               <Route exact path="/discover/:name" component={MovieList} />
               <Route exact path="/movie/:id" component={MovieDetails} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
               <Route exact path="/">
                 <Redirect to="/discover/popular" />
               </Route>

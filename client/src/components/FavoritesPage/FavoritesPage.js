@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/styles'
 import styles from '../../styles/favorites'
 import {MovieCard} from '../Home/MovieCard'
 import axios from 'axios';
-import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../config'
+import Rating from '@material-ui/lab/Rating';
 
 
 
@@ -44,7 +44,7 @@ const FavoritesPage = ( props ) => {
                             <MovieCard movieUrl={m.movieImage} id={m.movieId} />
                             <div className={classes.cardInfo}>
                                 <div>{m.title}</div>
-                                <div>{m.rating}</div>
+                                <div><Rating name="read-only" value={m.vote_average/2} readOnly /></div>
                             </div>
                         </Grid>
                     ))

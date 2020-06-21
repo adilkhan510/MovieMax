@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import Axios from 'axios'
 import { makeStyles } from '@material-ui/styles'
 import { MovieCard } from '../Home/MovieCard'
-import { Paper, Grid, Typography, Button } from '@material-ui/core'
+import { Paper, Grid, Button } from '@material-ui/core'
 import { fetchMoviesByGenre, fetchDiscover } from '../../actions/actions'
-import { API_URL, API_KEY,IMAGE_BASE_URL, IMAGE_SIZE, IMAGE_URL } from '../../config'
+import { IMAGE_URL } from '../../config'
+import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles(theme=>({
     root : {
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme=>({
     },
     cardInfo : {
         display : "flex",
-        flexDirection : "column",
+        flexDirection : "row",
         justifyContent : "space-between",
         maxWidth : "90%"
     },
@@ -78,11 +78,11 @@ export const MovieList = ( props ) => {
 
                     {
                         movies && movies.map((m,index)=>(
-                            <Grid item xs={12} sm={6} md={4} lg={3}  >
+                            <Grid item xs={11} sm={6} md={4} lg={3}  >
                                 <MovieCard movieUrl={`${IMAGE_URL}/w500${m.poster_path}`} id={m.id} />
                                 <div className={classes.cardInfo}>
                                     <div>{m.title}</div>
-                                    <div>{m.rating}</div>
+                                    <div><Rating name="read-only" value={m.vote_average/2} readOnly /></div>
                                 </div>
                             </Grid>
                         ))

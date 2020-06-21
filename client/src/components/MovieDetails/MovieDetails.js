@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Rating from '@material-ui/lab/Rating';
-import Axios from 'axios'
 import { Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import Avatar from '@material-ui/core/Avatar';
@@ -165,6 +164,8 @@ export const MovieDetails = (props) => {
     useEffect(()=>{
         renderMovieInfo(movieId)
         },[movieId])
+
+    if(movieInfo){
     return (
         
         <Grid 
@@ -242,4 +243,7 @@ export const MovieDetails = (props) => {
             }
         </Grid>
     )
+    }else{
+        return(<div></div>)
+    }
 }

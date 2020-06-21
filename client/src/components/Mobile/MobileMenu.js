@@ -13,8 +13,8 @@ import {Typography, MenuItem, Tabs, Tab, Button} from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../Context/userContext'
-
-const drawerWidth = 150;
+import img from '../../Images/logo.png'
+const drawerWidth = 160;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    background : theme.palette.primary.main
+    background : theme.palette.yellow.main
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+    color : "black"
   },
   content: {
     flexGrow: 1,
@@ -57,9 +58,14 @@ menuItem : {
     display : "flex",
     justifyContent : "center",
     alignItems : "center",
-    fontSize: "0.8rem",
+    fontSize: "0.5rem",
     textTransform: "uppercase",
     letterSpacing: "-0.5px",
+    minHeight : "auto",
+    [theme.breakpoints.up('md')] : {
+      fontSize : "0.8rem",
+      minHeight : 'auto',
+    }
 },
 href : {
     textDecoration : "none",
@@ -68,7 +74,9 @@ links : {
     display: "flex",
     flexDirection: "column",
     maxWidth: "10rem",
-    padding: "0rem 1rem",
+    [theme.breakpoints.up('md')]:{
+      padding : "0rem 1rem"
+    }
 },
 header : {
     fontWeight: "800",
@@ -97,6 +105,10 @@ hover : {
 typography : {
     textTransform: "uppercase",
     letterSpacing: "-0.5px",
+    fontSize : "0.8rem",
+    [theme.breakpoints.up('md')] : {
+      fontSize : "1rem"
+    }
 },
 menuDirectory : {
   marginLeft : "auto"
@@ -149,19 +161,25 @@ function MobileMenu(props) {
                 <MenuItem
                 disableGutters={true}
                 className={classes.menuItem}
-                >Popular</MenuItem>
+                >
+                  <i class="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+                  Popular</MenuItem>
             </a>
             <a href="/discover/now_playing" className={classes.href}>
             <MenuItem
             disableGutters={true}
             className={classes.menuItem}                
-            >Trending</MenuItem>
+            >
+              <i class="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+              Trending</MenuItem>
             </a>
             <a href="/discover/upcoming" className={classes.href}>
                 <MenuItem
                 disableGutters={true}
                 className={classes.menuItem}
-                >Upcoming</MenuItem>
+                >
+                  <i class="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+                  Upcoming</MenuItem>
             </a>
             </div>
         </div>
@@ -176,6 +194,7 @@ function MobileMenu(props) {
             className={location === g.id ? `${classes.menuItem} ${classes.hover}` : `${classes.menuItem}`}
             disableGutters={true}
             key={g.id}>
+            <i class="fas fa-video" style={{marginRight : "0.2rem"}}></i>
             {g.name}
             </MenuItem>
         </a>
@@ -191,7 +210,7 @@ function MobileMenu(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
-            color="inherit"
+            color="black"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -199,22 +218,18 @@ function MobileMenu(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap className={classes.typography}>
-            Movie Max
-          </Typography>
+          <img src={img} style={{width: "3rem", height : "3rem", borderRadius : "10px"}} />
           <div className={classes.menuDirectory}>
             {
               currentUser ? (
                   <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
-                  <Tab value={0} label="Home" component={Link} to="/discover/popular" style={{color : "white"}} />
-                  <Tab value={1} label="Favorites" component={Link} to="/favorites" style={{color : "white"}} />
-                  <Tab onClick={handleLogout} label="Logout" />
+                  <Tab value={1} className={classes.typography} label="Favorites" component={Link} to="/favorites" style={{color : "black"}} />
+                  <Tab onClick={handleLogout} className={classes.typography} label="Logout" />
                   </Tabs>
                 ) :
                 (
                 <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
-                <Tab value={0} label="Home" component={Link} to="/" style={{color : "white"}} />
-                <Tab value={1} label="Login" component={Link} to="/login" style={{color : "white"}} />
+                <Tab value={1} label="Login" component={Link} to="/login" style={{color : "black"}} />
                 </Tabs>
                 )
               }

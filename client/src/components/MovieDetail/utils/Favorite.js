@@ -29,7 +29,7 @@ export const Favorite = (props) => {
     const classes = useStyles();
     const {movieId, movieInfo, movieImage} = props;
     const [favNum, setFavNum] = useState(0)
-    const [favorited, setFavorited] = useState('Add to Favorites')
+    const [favorited, setFavorited] = useState('Favorite')
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const details = {
         id : userInfo.id,
@@ -64,10 +64,10 @@ export const Favorite = (props) => {
                 console.log(response)
                 if(response.data.success){
                     setFavNum(favNum+1)
-                    setFavorited("Remove From Favorites")
+                    setFavorited("Unfavorite")
                 }else if(response.data.deleted) {
                     setFavNum(favNum -1)
-                    setFavorited("Add to Favorites")
+                    setFavorited("Favorite")
                 }
             })
             .catch(error => {
