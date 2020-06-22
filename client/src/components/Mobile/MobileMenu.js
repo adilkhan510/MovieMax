@@ -211,7 +211,7 @@ function MobileMenu(props) {
           <div className={classes.menuDirectory}>
             {
               currentUser ? (
-                  <div className={classes.tabsContainer} onChange={handleChange}>
+                  <div className={classes.tabsContainer}>
                   <Button className={classes.typography} onClick={()=>{history.push('/favorites')}}>
                     Favorites
                   </Button>
@@ -220,9 +220,11 @@ function MobileMenu(props) {
                   </div>
                 ) :
                 (
-                <Tabs value={value} className={classes.tabsContainer} onChange={handleChange}>
-                <Tab value={0} label="Login" component={Link} to="/login" style={{color : "black"}} />
-                </Tabs>
+                  <div className={classes.tabsContainer}> 
+                    <Button className={classes.typography} onClick={()=>{history.push('/favorites')}}>
+                    Login
+                    </Button>
+                  </div>
                 )
               }
           </div>
