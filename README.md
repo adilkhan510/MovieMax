@@ -9,6 +9,10 @@ See real examples:
 
 * <https://moviemax-2020.herokuapp.com/>
 
+
+### Screenshots
+<img src="https://github.com/Adilkhan510/MovieMax/blob/master/movieMax.png">
+
 ## Table of contents
 
 Use for instance <https://github.com/ekalinin/github-markdown-toc>:
@@ -18,9 +22,10 @@ Use for instance <https://github.com/ekalinin/github-markdown-toc>:
 >   * [Table of contents](#table-of-contents)
 >   * [Wireframes](#Wireframes)
 >     * [Screenshots](#screenshots)
->   * [Code](#code)
+>   * [Features](#Features)
+
+## Features
+> *node 
 
 ## Wireframes
 <img src="https://github.com/Adilkhan510/MovieMax/blob/master/MovieMax%20design-Page-1.png">
-
-### Screenshots
