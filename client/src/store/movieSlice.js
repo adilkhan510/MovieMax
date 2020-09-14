@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import api from '../axios/index'
 
 const initialState = {
     movies: [],
@@ -16,6 +17,7 @@ const moviesSlice = createSlice({
     reducers: {
         getMoviesGenres: (state) => {
             state.moviesGenresLoading = true;
+            console.log("I am fetching movies")
         },
         getMoviesGenresSuccess: (state, { payload }) => {
             state.moviesGenres = payload
@@ -23,6 +25,7 @@ const moviesSlice = createSlice({
         },
         getMovies: (state) => {
             state.moviesLoading = true
+            console.log("I am fetching movies")
         },
         getMoviesSuccess: (state, { payload }) => {
             state.moviesData = payload
@@ -43,23 +46,23 @@ export const moviesSelector = state => state.movieSlice
 export const { getMovies, getMoviesGenres, getMoviesSuccess, getMoviesGenresSuccess, getMoviesFailure } = moviesSlice.actions
 
 
-// export function init(projectId) {
-//     return async dispatch => {
-//         dispatch(getVmInstances())
+export function init2() {
+    return async dispatch => {
+        dispatch(getMoviesGenres())
 
-//         try {
-//             const response = await fetch("https://demo.cloudmatos.dev/gcp/vm-instances/")
-//             const data = await response.json()
-//             console.log(data)
-//             dispatch(getVmInstancesSuccess(data))
-//         } catch (error) {
-//             const payload = {
-//                 err: error
-//             }
-//             dispatch(getVmInstancesFailure(payload))
-//         }
-//     }
-// }
+        try {
+            const res = await api.get('/configuration');
+            console.log(res, ".......config")
+            dispatch(getMoviesGenresSuccess(res))
+
+        } catch (error) {
+            const payload = {
+                err: error
+            }
+            dispatch(getMoviesFailure(payload))
+        }
+    }
+}
 
 
 
