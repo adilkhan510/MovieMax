@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
-import {Typography, MenuItem, Tabs, Tab, Button} from '@material-ui/core';
+import { Typography, MenuItem, Tabs, Tab, Button } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../Context/userContext'
@@ -19,7 +19,7 @@ const drawerWidth = 160;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection : "column",
+    flexDirection: "column",
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    background : theme.palette.yellow.main
+    background: theme.palette.yellow.main
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -44,76 +44,76 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
-    color : "black"
+    color: "black"
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-stickyBox : {
-    margin : "2rem"
-},
-menuItem : {
-    color : "grey",
-    display : "flex",
-    justifyContent : "center",
-    alignItems : "center",
+  stickyBox: {
+    margin: "2rem"
+  },
+  menuItem: {
+    color: "grey",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     fontSize: "0.5rem",
     textTransform: "uppercase",
     letterSpacing: "-0.5px",
-    [theme.breakpoints.up('md')] : {
-      fontSize : "0.8rem",
-      minHeight : 'auto',
+    [theme.breakpoints.up('md')]: {
+      fontSize: "0.67rem",
+      minHeight: 'auto',
     }
-},
-href : {
-    textDecoration : "none",
-},
-links : {
+  },
+  href: {
+    textDecoration: "none",
+  },
+  links: {
     display: "flex",
     flexDirection: "column",
     maxWidth: "10rem",
-    [theme.breakpoints.up('md')]:{
-      padding : "0rem 1rem"
+    [theme.breakpoints.up('md')]: {
+      padding: "0rem 1rem"
     }
-},
-header : {
+  },
+  header: {
     fontWeight: "800",
     fontSize: "1rem",
     textTransform: "uppercase",
     letterSpacing: "-0.5px",
-    color : "grey"
-},
-insideContainer : {
+    color: "grey"
+  },
+  insideContainer: {
     display: "flex",
     flexDirection: "column",
-    justifyContent : "flex-start",
-    width : "100%"
-},
-headerContainer : {
-    width : "fit-content",
-    margin : '2rem 2rem 1rem 1rem',
-},
-hover : {
-    border : "1px solid red ",
-    borderRadius : "1rem",
-    padding : "0 0.5rem",
-    position : "relative", 
-    top : 0
-},
-typography : {
+    justifyContent: "flex-start",
+    width: "100%"
+  },
+  headerContainer: {
+    width: "fit-content",
+    margin: '2rem 2rem 1rem 1rem',
+  },
+  hover: {
+    border: "1px solid red ",
+    borderRadius: "1rem",
+    padding: "0 0.5rem",
+    position: "relative",
+    top: 0
+  },
+  typography: {
     textTransform: "none",
     letterSpacing: "0.5px",
-    fontWeight : "400",
-    color : "grey",
-    fontSize : "0.8rem",
-    [theme.breakpoints.up('md')] : {
-      fontSize : "1rem"
+    fontWeight: "400",
+    color: "grey",
+    fontSize: "0.8rem",
+    [theme.breakpoints.up('md')]: {
+      fontSize: "0.6rem"
     }
-},
-menuDirectory : {
-  marginLeft : "auto"
-}
+  },
+  menuDirectory: {
+    marginLeft: "auto"
+  }
 }));
 
 function MobileMenu(props) {
@@ -127,13 +127,14 @@ function MobileMenu(props) {
     setMobileOpen(!mobileOpen);
   };
   const [value, setValue] = useState(0)
-  const handleChange = (event, value)=>{
-      setValue(value)}
+  const handleChange = (event, value) => {
+    setValue(value)
+  }
 
   const genres = JSON.parse(localStorage.getItem('genres'));
-  const handleLogout =()=>{
+  const handleLogout = () => {
     setCurrentUser('');
-    localStorage.setItem('user','')
+    localStorage.setItem('user', '')
     history.push('/discover/popular')
   }
 
@@ -143,51 +144,51 @@ function MobileMenu(props) {
       <div className={classes.toolbar} />
       <List className={classes.links}>
         <div className={classes.root}>
-            <Typography className={classes.header}>
-                Discover
+          <Typography className={classes.header}>
+            Discover
             </Typography>
-            <div className={classes.root}>
+          <div className={classes.root}>
             <a href="/discover/popular" className={classes.href}>
-                <MenuItem
+              <MenuItem
                 disableGutters={true}
                 className={classes.menuItem}
-                >
-                  <i className="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+              >
+                <i className="fas fa-star" style={{ marginRight: "0.2rem" }}></i>
                   Popular</MenuItem>
             </a>
             <a href="/discover/now_playing" className={classes.href}>
-            <MenuItem
-            disableGutters={true}
-            className={classes.menuItem}                
-            >
-              <i className="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+              <MenuItem
+                disableGutters={true}
+                className={classes.menuItem}
+              >
+                <i className="fas fa-star" style={{ marginRight: "0.2rem" }}></i>
               Trending</MenuItem>
             </a>
             <a href="/discover/upcoming" className={classes.href}>
-                <MenuItem
+              <MenuItem
                 disableGutters={true}
                 className={classes.menuItem}
-                >
-                  <i className="fas fa-star" style={{marginRight : "0.2rem"}}></i>
+              >
+                <i className="fas fa-star" style={{ marginRight: "0.2rem" }}></i>
                   Upcoming</MenuItem>
             </a>
-            </div>
+          </div>
         </div>
       </List>
       <Divider />
       <List className={classes.links}>
         <Typography className={classes.header}>Genres</Typography>
         {genres && genres.map((g, index) => (
-            <a href={`/discover/${g.id}`} className={classes.href} key={g.id}>
+          <a href={`/discover/${g.id}`} className={classes.href} key={g.id}>
             <MenuItem
-            // Check to see if the location is the same as the category. If so highlight it.
-            className={location === g.id ? `${classes.menuItem} ${classes.hover}` : `${classes.menuItem}`}
-            disableGutters={true}
-            key={g.id}>
-            <i className="fas fa-video" style={{marginRight : "0.2rem"}}></i>
-            {g.name}
+              // Check to see if the location is the same as the category. If so highlight it.
+              className={location === g.id ? `${classes.menuItem} ${classes.hover}` : `${classes.menuItem}`}
+              disableGutters={true}
+              key={g.id}>
+              <i className="fas fa-video" style={{ marginRight: "0.2rem" }}></i>
+              {g.name}
             </MenuItem>
-        </a>
+          </a>
         ))}
       </List>
     </div>
@@ -207,26 +208,26 @@ function MobileMenu(props) {
           >
             <MenuIcon />
           </IconButton>
-          <img src={img} style={{width: "3rem", height : "3rem", borderRadius : "10px"}} />
+          <img src={img} style={{ width: "3rem", height: "3rem", borderRadius: "10px" }} />
           <div className={classes.menuDirectory}>
             {
               currentUser ? (
-                  <div className={classes.tabsContainer}>
-                  <Button className={classes.typography} onClick={()=>{history.push('/favorites')}}>
+                <div className={classes.tabsContainer}>
+                  <Button className={classes.typography} onClick={() => { history.push('/favorites') }}>
                     Favorites
                   </Button>
                   {/* <Tab className={classes.typography} label="Favorites" component={Link} to="/favorites" style={{color : "black"}} /> */}
                   <Button onClick={handleLogout} className={classes.typography}>Logout</Button>
-                  </div>
-                ) :
+                </div>
+              ) :
                 (
-                  <div className={classes.tabsContainer}> 
-                    <Button className={classes.typography} onClick={()=>{history.push('/favorites')}}>
-                    Login
+                  <div className={classes.tabsContainer}>
+                    <Button className={classes.typography} onClick={() => { history.push('/favorites') }}>
+                      Login
                     </Button>
                   </div>
                 )
-              }
+            }
           </div>
         </Toolbar>
       </AppBar>

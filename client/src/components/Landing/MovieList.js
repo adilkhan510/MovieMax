@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        maxWidth: "70%"
+        maxWidth: "80%"
     },
     page: {
         width: "100%",
@@ -81,7 +81,7 @@ export const MovieList = (props) => {
 
                     {
                         movies && movies.map((m, index) => (
-                            <Grid item xs={11} sm={6} md={3} lg={3} key={m.id}  >
+                            <Grid item xs={10} sm={10} md={6} lg={3} key={m.id}  >
                                 <MovieCard movieUrl={`${IMAGE_URL}/w500${m.poster_path}`} id={m.id} mainPage={true} />
                                 <div className={classes.cardInfo}>
                                     <div>{m.title}</div>
