@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import theme from "./styles/muiTheme"
-import Login from './Auth/Login';
+import Login from './Auth/Login.v2';
 import UserProvider from './Context/userContext'
 import FavoritesPage from './components/FavoritesPage/FavoritesPage'
 import { init } from './actions/actions'

@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
     color: "grey",
     fontSize: "0.8rem",
     [theme.breakpoints.up('md')]: {
-      fontSize: "0.6rem"
+      fontSize: "0.8rem"
     }
   },
   menuDirectory: {
@@ -222,7 +222,7 @@ function MobileMenu(props) {
               ) :
                 (
                   <div className={classes.tabsContainer}>
-                    <Button className={classes.typography} onClick={() => { history.push('/favorites') }}>
+                    <Button className={classes.typography} onClick={() => { history.push('/login') }}>
                       Login
                     </Button>
                   </div>
