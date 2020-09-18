@@ -1,36 +1,36 @@
-const styles = (theme)=>({
-    container : {
-        width : "100vw",
+const styles = (theme) => ({
+    container: {
+        width: "100vw",
     },
     textContainer: {
         width: "100vw",
         display: "flex",
-        justifyContent : "center",
-        alignItems : "center",
-        margin : "20px",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "20px",
     },
-    text : {
-        background : theme.palette.yellow.main,
-        padding : "10px"
+    text: {
+        background: theme.palette.yellow.main,
+        padding: "10px"
     },
-    text1 : {
-        padding : "10px",
-        background : theme.palette.primary.light,
+    text1: {
+        padding: "10px",
+        background: theme.palette.primary.light,
     },
-    typography : {
-        color : "whitesmoke"
+    typography: {
+        color: "whitesmoke"
     },
-    insideContainer : {
-        width : "70vw",
-        height : "70vh",
-        margin : "0 15%"
+    insideContainer: {
+        width: "70vw",
+        height: "70vh",
+        margin: "0 15%"
     },
-    root : {
+    root: {
         padding: "2rem",
         marginTop: "2rem",
-        width : "100%",
-        marginLeft : "auto",
-        marginRight : "2rem",
+        width: "100%",
+        marginLeft: "auto",
+        marginRight: "2rem",
     },
 })
 

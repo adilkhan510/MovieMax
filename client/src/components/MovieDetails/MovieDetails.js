@@ -131,14 +131,14 @@ const useStyles = makeStyles(theme => ({
     similarMovieContainer: {
         padding: "1rem",
         marginTop: "3rem",
-        marginleft: "4rem",
         [theme.breakpoints.up('sm')]: {
             padding: "2rem",
             marginTop: "2rem",
             width: "100%",
             marginleft: "4rem",
             marginRight: "1rem",
-        }
+        },
+        width: "100%"
     }
 
 }))
