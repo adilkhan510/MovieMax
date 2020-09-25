@@ -8,8 +8,8 @@ export const MovieCard = (props) => {
         return (
             <a href={`/movie/${props.id}`}>
                 <img src={props.movieUrl} style={{
-                    height: "400px"
-
+                    height: "400px",
+                    width: "100%"
                 }} alt="movie" />
             </a>
         )

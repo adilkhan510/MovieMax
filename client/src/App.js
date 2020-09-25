@@ -11,7 +11,7 @@ import { init } from './actions/actions'
 import { MovieDetails } from './components/MovieDetails/MovieDetails'
 import { MovieList } from './components/Landing/MovieList';
 import MobileMenu from './components/Mobile/MobileMenu'
-import Register from './Auth/Register'
+import Register from './Auth/Register.v2'
 import store from './store';
 import { init2, getMovies } from './store/movieSlice'
 

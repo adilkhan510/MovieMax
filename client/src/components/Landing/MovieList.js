@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         padding: "2rem",
         marginTop: "2rem",
-        width: "100vw",
+        width: "100%",
         marginLeft: "auto",
         marginRight: "2rem",
         [theme.breakpoints.up('sm')]: {
@@ -19,9 +19,16 @@ const useStyles = makeStyles(theme => ({
     },
     cardInfo: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        maxWidth: "80%"
+        flexDirection: "column",
+        alignContent: "center",
+        justifyContent: "center",
+        margin: "auto",
+        [theme.breakpoints.up('sm')]: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            maxWidth: "80%",
+        }
     },
     page: {
         width: "100%",
@@ -74,14 +81,14 @@ export const MovieList = (props) => {
     }
     if (movies) {
         return (
-            <Paper className={classes.root}>
+            <div className={classes.root}>
                 <div className={classes.header}>
                 </div>
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
 
                     {
                         movies && movies.map((m, index) => (
-                            <Grid item xs={12} sm={8} md={4} lg={2} key={m.id}  >
+                            <Grid item xs={12} sm={12} md={4} lg={2} key={m.id}  >
                                 <MovieCard movieUrl={`${IMAGE_URL}/w500${m.poster_path}`} id={m.id} mainPage={true} />
                                 <div className={classes.cardInfo}>
                                     <div>{m.title}</div>
@@ -104,7 +111,7 @@ export const MovieList = (props) => {
                             )
                     }
                 </div>
-            </Paper>
+            </div>
         )
     } else {
         return <div>Loading</div>
